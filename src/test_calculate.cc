@@ -18,5 +18,8 @@ TEST_F(TestCalculate, inputValidationTest) {
   EXPECT_EQ(check.check_input("12.543"), 1);
   EXPECT_EQ(check.check_input("12.543^"), 0);
   EXPECT_EQ(check.check_input("((2-1))"), 1);
-  // EXPECT_EQ(check.check_input("12.543((2-1))+1"), 1);
+  EXPECT_EQ(check.check_input("((2-1))1"), 0);
+  EXPECT_EQ(check.check_input("((2-1))+1"), 1);
+  EXPECT_EQ(check.check_input("12.543+((2-1))"), 1);
+  EXPECT_EQ(check.check_input("12.543((2-1))"), 0);
 }
