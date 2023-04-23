@@ -13,18 +13,16 @@ int Checks::check_funcs(char value) {
   return math_sympols.find(value) != string::npos;
 }
 int Checks::check_input(string vlaue) {
-  int valid_operator = 0;
-  int scopes = 0, math_symb = 0, is_pre_num = 0;
+  int valid_operator = 0, scopes = 0, math_symb = 0, is_pre_num = 0, close = 0;
   for (auto &i : vlaue) {
     if (!check_number(i) && !check_operator(i) && !check_funcs(i)) return 0;
     if (check_number(i)) {
-      if (valid_operator) valid_operator--;
-      ++is_pre_num;
+      if (close) return 0;
+      valid_operator = 0, ++is_pre_num;
     }
     if (check_funcs(i)) {
-      ++math_symb;
-      --valid_operator;
-    };
+      ++math_symb, --valid_operator;
+    }
     if (check_operator(i)) {
       if (i == '(') {
         if (is_pre_num) return 0;
@@ -33,12 +31,11 @@ int Checks::check_input(string vlaue) {
         else if (valid_operator)
           --valid_operator;
         ++scopes;
-      } else if (i == ')') {
-        --scopes;
-        if (valid_operator) --valid_operator;
+      } else if (i == ')' && !valid_operator) {
+        --scopes, ++close;
       } else {
         if (valid_operator) return 0;
-        ++valid_operator;
+        ++valid_operator, close = 0;
       }
       is_pre_num = 0;
     }
