@@ -14,10 +14,11 @@ class Checks {
   Checks() = default;
   ~Checks() = default;
 
-  int check_number(char value);
-  int check_operator(char value);
-  int check_funcs(char value);
-  int check_input(string vlaue);
+  int number_check(char value);
+  int operator_check(char value);
+  int funcs_check(char value);
+  int first_item(char value);
+  int input_check(string vlaue);
 
  private:
   string digit_symbols = "0123456789";
