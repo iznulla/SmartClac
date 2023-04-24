@@ -12,9 +12,15 @@ int Checks::funcs_check(char value) {
 
   return math_sympols.find(value) != string::npos;
 }
-int Checks::input_check(string vlaue) {
+int Checks::first_item(char value) {
+  if (operator_check(value))
+    if (value != '-' && value != '+' && value != '(') return 0;
+  return 1;
+}
+int Checks::input_check(string value) {
   int valid_operator = 0, scopes = 0, math_symb = 0, is_pre_num = 0, close = 0;
-  for (auto &i : vlaue) {
+  if (!first_item(value[0])) return 0;
+  for (auto &i : value) {
     if (!number_check(i) && !operator_check(i) && !funcs_check(i)) return 0;
     if (number_check(i)) {
       if (close) return 0;

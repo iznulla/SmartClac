@@ -38,4 +38,7 @@ TEST_F(TestCalculate, inputValidationTest) {
   //     check.input_check("5+(1+2)*4*(1)*@(.2*5-2)+!(@(2*5))-#(2^_(5-1))+$(*55)"),
   //     0);
   EXPECT_EQ(check.input_check("(-2*5-2)"), 1);
+  EXPECT_EQ(check.input_check("+2*5-2"), 1);
+  EXPECT_EQ(check.input_check(".2*5-2"), 0);
+  EXPECT_EQ(check.input_check("@(2*5-2)"), 1);
 }

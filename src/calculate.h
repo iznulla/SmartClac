@@ -22,11 +22,11 @@ class Checks {
 
  private:
   string digit_symbols = "0123456789";
-  string operator_symbols = "+-*/=()^.%";
+  string operator_symbols = "+-*/()^.%";
   // string str_symbols = "sincoatqrlgmd";
   map<string, int> math_preorites{
-      {"COS", 11},  {"SIN", 12},  {"TAN", 13}, {"ACOS", 14}, {"ASIN", 15},
-      {"ATAN", 16}, {"SQRT", 17}, {"LN", 18},  {"LOG", 19},  {"MOD", 2}};
+      {"cos", 11},  {"sin", 12},  {"tan", 13}, {"acos", 14}, {"asin", 15},
+      {"atan", 16}, {"sqrt", 17}, {"ln", 18},  {"log", 19},  {"mod", 2}};
   // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
   //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
   string math_sympols = "!@#$_vbup";
