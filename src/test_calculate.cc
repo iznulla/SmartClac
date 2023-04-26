@@ -91,13 +91,28 @@ TEST_F(TestCalculate, ParsingTest) {
       "1+2+3+(3+5)^2+3^(1-4)*3^(3*((2+1)+1))/(((1)))+2^1");
   EXPECT_EQ(parsing_polish.check_pars(), "12+3+35+2^+314-^3321+1+*^*1/+21^+");
   parsing_polish.clear();
-  // parsing_polish.pars_to_polish(
-  //     "1+2+3+(3+5)+2^3^1-4*3+(3*((2+1)+1))/(((1)))+2^1");
-  // EXPECT_EQ(parsing_polish.check_pars(),
-  // "12+3+35++231^^+43*-321+1+*1/+21^+");
-  // parsing_polish.pars_to_polish("2^3^1-4*2^1");
-  // EXPECT_EQ(parsing_polish.check_pars(), "231^^421^*-");
-  // parsing_polish.print();
+  parsing_polish.pars_to_polish(
+      "1+2+3+(3+5)+2^3^1-4*3+(3*((2+1)+1))/(((1)))+2^1");
+  EXPECT_EQ(parsing_polish.check_pars(), "12+3+35++231^^+43*-321+1+*1/+21^+");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish("2^3^1-4*2^1");
+  EXPECT_EQ(parsing_polish.check_pars(), "231^^421^*-");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish("@(4)+9+2^3");
+  EXPECT_EQ(parsing_polish.check_pars(), "4@9+23^+");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish(
+      "5+(1+2)*4*(1)*!(2*5-2)+u(u(2*5))-u(2^u(5-1))+u(5)");
+  EXPECT_EQ(parsing_polish.check_pars(), "512+4*1*25*2-!*+25*uu+251-u^u-5u+");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish("@(2*5-2)");
+  EXPECT_EQ(parsing_polish.check_pars(), "25*2-@");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish(
+      "u(4)+9.235+2^3^u(u(10))-564-u(25)+28.6*35%99^2^3");
+  EXPECT_EQ(parsing_polish.check_pars(),
+            "4u9.235+2310uu^^+564-25u-28.635*9923^^%+");
+  parsing_polish.print();
   //   EXPECT_DOUBLE_EQ(calc.calcAll("2+1-3+9"), 9)
   //   calc.clear();
   //   EXPECT_DOUBLE_EQ(calc.calcAll("2*1+3"), 5);

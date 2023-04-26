@@ -65,6 +65,8 @@ int Parser::priority(char op) {
     result = 2;
   else if (op == '^')
     result = 3;
+  else if (check.funcs_check(op))
+    result = 4;
   else if (op == '(')
     result = 0;
   return result;
@@ -90,7 +92,7 @@ void Parser::add_item(char op) {
       if (priority(op) == 0) {
         opr_.push(op);
       } else {
-        while (priority(op) <= priority(opr_.top())) {
+        while (priority(op) <= priority(opr_.top()) && priority(op) != 3) {
           node_.push_back(opr_.top());
           opr_.pop();
           if (opr_.empty()) break;
