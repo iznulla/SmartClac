@@ -1,5 +1,6 @@
 #include "calculate.h"
 
+// class Check
 int Checks::number_check(char value) {
   return digit_symbols.find(value) != string::npos;
 }
@@ -45,4 +46,67 @@ int Checks::input_check(string value) {
   }
   if (valid_operator || scopes || math_symb) return 0;
   return 1;
+}
+
+// class Parser
+
+void Parser::clear() {
+  this->node_.clear();
+  while (!opr_.empty()) {
+    this->opr_.pop();
+  }
+}
+int Parser::priority(char op) {
+  int result = 10;
+  if (op == '+' || op == '-')
+    result = 1;
+  else if (op == '/' || op == '*')
+    result = 2;
+  else if (op == '(')
+    result = 0;
+  return result;
+}
+void Parser::move_less_items() {
+  auto sz = opr_.size();
+  for (auto i = 0; i != sz; ++i) {
+    node_.push_back(opr_.top());
+    opr_.pop();
+  }
+}
+void Parser::add_item(char op) {
+  if (!opr_.empty()) {
+    if (op == ')') {
+      while (opr_.top() != '(') {
+        node_.push_back(opr_.top());
+        opr_.pop();
+      }
+      opr_.pop();
+      return;
+    }
+    if (priority(op) <= priority(opr_.top())) {
+      if (priority(op) == 0) {
+        opr_.push(op);
+      } else {
+        node_.push_back(opr_.top());
+        opr_.pop();
+        opr_.push(op);
+      }
+    } else {
+      opr_.push(op);
+    }
+  } else {
+    opr_.push(op);
+  }
+}
+void Parser::pars_to_polish(string value) {
+  if (check.input_check(value)) {
+    for (size_t i = 0; i != value.size(); ++i) {
+      if (check.number_check(value[i])) {
+        this->node_.push_back(value[i]);
+      } else {
+        add_item(value[i]);
+      }
+    }
+    move_less_items();
+  }
 }
