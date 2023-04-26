@@ -4,6 +4,7 @@
 #include <map>
 #include <stack>
 #include <string>
+#include <utility>
 
 using namespace std;
 
@@ -86,12 +87,31 @@ class Calculate {
     node_.push_back(calc(x, y, opr_.top()));
     opr_.pop();
   }
-
+  void move_last_items() {
+    auto sz = opr_.size();
+    for (auto i = 0; i != sz; ++i) {
+      node_.push_back(opr_.top());
+      opr_.pop();
+    }
+  }
   void add_item(char op) {
     if (!opr_.empty()) {
+      if (op == ')') {
+        while (opr_.top() != '(') {
+          node_.push_back(opr_.top());
+          opr_.pop();
+        }
+        opr_.pop();
+        return;
+      }
       if (priority(op) <= priority(opr_.top())) {
-        calculate(opr_.top());
-        if (op != 0) opr_.push(op);
+        if (priority(op) == 0) {
+          opr_.push(op);
+        } else {
+          node_.push_back(opr_.top());
+          opr_.pop();
+          opr_.push(op);
+        }
       } else {
         opr_.push(op);
       }
@@ -100,32 +120,28 @@ class Calculate {
     }
   }
 
+  // std::size_t t = i;
+  // d = stod(value.substr(t), &t);
+  // i += t;
   void pars_and_calc(string value) {
     if (check.input_check(value)) {
-      double d;
-      for (size_t i = 0; i != value.size();) {
+      for (size_t i = 0; i != value.size(); ++i) {
         if (check.number_check(value[i])) {
-          std::size_t t = i;
-          d = stod(value.substr(t), &t);
-          i += t;
-          this->node_.push_back(d);
-        } else if (value[i] == '(' || value[i] == ')') {
-          ++i;
-          continue;
+          this->node_.push_back(value[i]);
         } else {
           add_item(value[i]);
-          i++;
         }
       }
-      calculate(opr_.top());
+      move_last_items();
     }
   }
   void print() {
-    for (auto &i : node_) cout << i << endl;
+    for (auto &i : node_) cout << i;
   }
+  string check_pars() { return node_; }
 
   double calcAll(string value) {
-    pars_and_calc(value);
+    pars_and_calc(std::move(value));
     if (node_.size() > 1) calculate(opr_.top());
     double res = node_.back();
     return res;
@@ -133,6 +149,6 @@ class Calculate {
 
  private:
   Checks check{};
-  list<double> node_{};
+  string node_{};
   stack<char> opr_{};
 };
