@@ -30,14 +30,14 @@ TEST_F(TestCalculate, inputValidationTest) {
   EXPECT_EQ(check.input_check("12.543+!(2+@(2-1)+12)+543+!(2+@(2-1))"), 1);
   EXPECT_EQ(
       check.input_check("@(4)+9.235+2^3^!(#(10))-564-@(25)+28.6*35%99^2^3"), 1);
+  EXPECT_EQ(check.input_check(
+                "5+(1+2)*4*(-1)*@(2*7.5-2)+!(@(2*5))-#(2^_(5-1))+$(55)"),
+            1);
   EXPECT_EQ(
-      check.input_check("5+(1+2)*4*(1)*@(2*7.5-2)+!(@(2*5))-#(2^_(5-1))+$(55)"),
+      check.input_check("1+2+3+(-3+5)*2+3/(1-4)^3*(3^((2+1)+1))/(((1)))+2"), 1);
+  EXPECT_EQ(
+      check.input_check("5+(1+2)*4*(1)*@(2*5-2)+!(@(2*5))-#(2^_(5-1))+$(*55)"),
       1);
-  EXPECT_EQ(
-      check.input_check("1+2+3+(3+5)*2+3/(1-4)^3*(3^((2+1)+1))/(((1)))+2"), 1);
-  // EXPECT_EQ(
-  //     check.input_check("5+(1+2)*4*(1)*@(.2*5-2)+!(@(2*5))-#(2^_(5-1))+$(*55)"),
-  //     0);
   EXPECT_EQ(check.input_check("(-2*5-2)"), 1);
   EXPECT_EQ(check.input_check("+2*5-2"), 1);
   EXPECT_EQ(check.input_check("2*5-2"), 1);
@@ -61,8 +61,44 @@ TEST_F(TestCalculate, ParsingTest) {
   parsing_polish.clear();
   parsing_polish.pars_to_polish("12.543+(2+(2-1)+12)+543+(2+(2-1))");
   EXPECT_EQ(parsing_polish.check_pars(), "12.543221-+12++543+221-++");
-  parsing_polish.print();
-  //   EXPECT_DOUBLE_EQ(calc.calcAll("2+1-3+9"), 9);
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish(
+      "1+2+3+(3+5)*2+3/(1-4)-3*(3+((2+1)+1))/(((1)))+2");
+  EXPECT_EQ(parsing_polish.check_pars(), "12+3+35+2*+314-/+3321+1++*1/-2+");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish("2+3/(1-4)-3");
+  EXPECT_EQ(parsing_polish.check_pars(), "2314-/+3-");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish("2+(((-3+5)))");
+  EXPECT_EQ(parsing_polish.check_pars(), "203-5++");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish("2+((-(-3+5)))");
+  EXPECT_EQ(parsing_polish.check_pars(), "2003-5+-+");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish("2+(+3)+5");
+  EXPECT_EQ(parsing_polish.check_pars(), "23++5+");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish(
+      "1+2+3+(3+5)*(-2)+3/(-1-4)-3*(-3+((2+1)+1))/(((-1)))+2");
+  EXPECT_EQ(parsing_polish.check_pars(),
+            "12+3+35+02-*+301-4-/+303-21+1++*01-/-2+");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish(
+      "1+2+3+(3+5)*2+3/(1-4)^3*(3^((2+1)+1))/(((1)))+2");
+  EXPECT_EQ(parsing_polish.check_pars(), "12+3+35+2*+314-3^/321+1+^*1/+2+");
+  parsing_polish.clear();
+  parsing_polish.pars_to_polish(
+      "1+2+3+(3+5)^2+3^(1-4)*3^(3*((2+1)+1))/(((1)))+2^1");
+  EXPECT_EQ(parsing_polish.check_pars(), "12+3+35+2^+314-^3321+1+*^*1/+21^+");
+  parsing_polish.clear();
+  // parsing_polish.pars_to_polish(
+  //     "1+2+3+(3+5)+2^3^1-4*3+(3*((2+1)+1))/(((1)))+2^1");
+  // EXPECT_EQ(parsing_polish.check_pars(),
+  // "12+3+35++231^^+43*-321+1+*1/+21^+");
+  // parsing_polish.pars_to_polish("2^3^1-4*2^1");
+  // EXPECT_EQ(parsing_polish.check_pars(), "231^^421^*-");
+  // parsing_polish.print();
+  //   EXPECT_DOUBLE_EQ(calc.calcAll("2+1-3+9"), 9)
   //   calc.clear();
   //   EXPECT_DOUBLE_EQ(calc.calcAll("2*1+3"), 5);
   //   calc.clear();

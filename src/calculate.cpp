@@ -35,6 +35,7 @@ int Checks::input_check(string value) {
         if (is_pre_num) return 0;
         if (math_symb) --math_symb;
         ++scopes;
+        if (valid_operator) --valid_operator;
       } else if (i == ')' && !valid_operator) {
         --scopes, ++close;
       } else {
@@ -60,8 +61,10 @@ int Parser::priority(char op) {
   int result = 10;
   if (op == '+' || op == '-')
     result = 1;
-  else if (op == '/' || op == '*')
+  else if (op == '/' || op == '*' || op == '%')
     result = 2;
+  else if (op == '^')
+    result = 3;
   else if (op == '(')
     result = 0;
   return result;
@@ -87,8 +90,11 @@ void Parser::add_item(char op) {
       if (priority(op) == 0) {
         opr_.push(op);
       } else {
-        node_.push_back(opr_.top());
-        opr_.pop();
+        while (priority(op) <= priority(opr_.top())) {
+          node_.push_back(opr_.top());
+          opr_.pop();
+          if (opr_.empty()) break;
+        }
         opr_.push(op);
       }
     } else {
@@ -104,6 +110,7 @@ void Parser::pars_to_polish(string value) {
       if (check.number_check(value[i])) {
         this->node_.push_back(value[i]);
       } else {
+        if (value[i] == '-' && value[i - 1] == '(') this->node_.push_back('0');
         add_item(value[i]);
       }
     }
