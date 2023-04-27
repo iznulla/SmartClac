@@ -71,10 +71,15 @@ int Parser::priority(char op) {
     result = 0;
   return result;
 }
+string Parser::convertOperator(char op) {
+  string temp;
+  temp.push_back(op);
+  return temp;
+}
 void Parser::move_less_items() {
   auto sz = opr_.size();
   for (auto i = 0; i != sz; ++i) {
-    node_.push_back(opr_.top());
+    node_.push_back(convertOperator(opr_.top()));
     opr_.pop();
   }
 }
@@ -82,18 +87,18 @@ void Parser::add_item(char op) {
   if (!opr_.empty()) {
     if (op == ')') {
       while (opr_.top() != '(') {
-        node_.push_back(opr_.top());
+        node_.push_back(convertOperator(opr_.top()));
         opr_.pop();
       }
       opr_.pop();
       return;
     }
     if (priority(op) <= priority(opr_.top())) {
-      if (priority(op) == 0) {
+      if (priority(op) == 0 || priority(op) == 3) {
         opr_.push(op);
       } else {
-        while (priority(op) <= priority(opr_.top()) && priority(op) != 3) {
-          node_.push_back(opr_.top());
+        while (priority(op) <= priority(opr_.top())) {
+          node_.push_back(convertOperator(opr_.top()));
           opr_.pop();
           if (opr_.empty()) break;
         }
@@ -110,12 +115,28 @@ void Parser::pars_to_polish(string value) {
   if (check.input_check(value)) {
     for (size_t i = 0; i != value.size(); ++i) {
       if (check.number_check(value[i])) {
-        this->node_.push_back(value[i]);
+        std::size_t t = i;
+        double d = stod(value.substr(t), &t);
+        i += t - 1;
+        string str = to_string(d);
+        this->node_.push_back(str);
       } else {
-        if (value[i] == '-' && value[i - 1] == '(') this->node_.push_back('0');
+        if ((value[i] == '-' && value[i - 1] == '(') ||
+            ((i == 0) && (value[i] == '-')))
+          this->node_.push_back("0");
         add_item(value[i]);
       }
     }
     move_less_items();
   }
+}
+string Parser::check_pars() {
+  string str;
+  for (auto &i : node_) {
+    str.append(i);
+  }
+  for (auto &i : str) {
+    cout << i;
+  }
+  return str;
 }

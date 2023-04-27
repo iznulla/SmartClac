@@ -42,13 +42,14 @@ class Parser {
   void add_item(char op);
   void pars_to_polish(string value);
   void print() {
-    for (auto &i : node_) cout << i;
+    for (auto &i : node_) cout << i << endl;
   }
-  string check_pars() { return node_; }
+  string convertOperator(char op);
+  string check_pars();
 
  private:
   Checks check{};
-  string node_{};
+  list<string> node_{};
   stack<char> opr_{};
 };
 
