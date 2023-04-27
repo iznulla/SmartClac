@@ -1,33 +1,33 @@
 #include "calculate.h"
 
 // class Check
-int Checks::number_check(char value) {
+int Checks::numberCheck(char value) {
   return digit_symbols.find(value) != string::npos;
 }
-int Checks::operator_check(char value) {
+int Checks::operatorCheck(char value) {
   return operator_symbols.find(value) != string::npos;
 }
-int Checks::funcs_check(char value) {
+int Checks::funcsCheck(char value) {
   return math_sympols.find(value) != string::npos;
 }
-int Checks::first_item(char value) {
-  if (operator_check(value))
+int Checks::firstItem(char value) {
+  if (operatorCheck(value))
     if (value != '-' && value != '+' && value != '(') return 0;
   return 1;
 }
-int Checks::input_check(string value) {
+int Checks::inputCheck(string value) {
   int valid_operator = 0, scopes = 0, math_symb = 0, is_pre_num = 0, close = 0;
-  if (!first_item(value[0])) return 0;
+  if (!firstItem(value[0])) return 0;
   for (auto &i : value) {
-    if (!number_check(i) && !operator_check(i) && !funcs_check(i)) return 0;
-    if (number_check(i)) {
+    if (!numberCheck(i) && !operatorCheck(i) && !funcsCheck(i)) return 0;
+    if (numberCheck(i)) {
       if (close) return 0;
       valid_operator = 0, ++is_pre_num;
     }
-    if (funcs_check(i)) {
+    if (funcsCheck(i)) {
       ++math_symb, --valid_operator;
     }
-    if (operator_check(i)) {
+    if (operatorCheck(i)) {
       if (i == '(') {
         if (is_pre_num) return 0;
         if (math_symb) --math_symb;
@@ -56,7 +56,7 @@ int Parser::priority(char op) {
     result = 2;
   else if (op == '^')
     result = 3;
-  else if (check.funcs_check(op))
+  else if (check.funcsCheck(op))
     result = 4;
   else if (op == '(')
     result = 0;
@@ -67,14 +67,14 @@ string Parser::convertOperator(char op) {
   temp.push_back(op);
   return temp;
 }
-void Parser::move_less_items(stack<char> *opr_, list<string> *node_) {
+void Parser::moveLessItems(stack<char> *opr_, list<string> *node_) {
   auto sz = opr_->size();
   for (auto i = 0; i != sz; ++i) {
     node_->push_back(convertOperator(opr_->top()));
     opr_->pop();
   }
 }
-void Parser::add_item(char op, stack<char> *opr_, list<string> *node_) {
+void Parser::addItem(char op, stack<char> *opr_, list<string> *node_) {
   if (!opr_->empty()) {
     if (op == ')') {
       while (opr_->top() != '(') {
@@ -102,11 +102,11 @@ void Parser::add_item(char op, stack<char> *opr_, list<string> *node_) {
     opr_->push(op);
   }
 }
-void Parser::pars_to_polish(string value, stack<char> *opr_,
-                            list<string> *node_) {
-  if (check.input_check(value)) {
+void Parser::parsToPolish(string value, stack<char> *opr_,
+                          list<string> *node_) {
+  if (check.inputCheck(value)) {
     for (size_t i = 0; i != value.size(); ++i) {
-      if (check.number_check(value[i])) {
+      if (check.numberCheck(value[i])) {
         std::size_t t = i;
         double d = stod(value.substr(t), &t);
         i += t - 1;
@@ -116,18 +116,18 @@ void Parser::pars_to_polish(string value, stack<char> *opr_,
         if ((value[i] == '-' && value[i - 1] == '(') ||
             ((i == 0) && (value[i] == '-')))
           node_->push_back("0");
-        add_item(value[i], opr_, node_);
+        addItem(value[i], opr_, node_);
       }
     }
-    move_less_items(opr_, node_);
+    moveLessItems(opr_, node_);
   }
 }
 
 // class Calculate
 
 double Calculate::popItem() {
-  double x = item.back();
-  item.pop_back();
+  double x = items.back();
+  items.pop_back();
   return x;
 }
 double Calculate::calcOperator(double x, double y, char op) {
@@ -141,6 +141,8 @@ double Calculate::calcOperator(double x, double y, char op) {
     return div(x, y);
   else if (op == '%')
     return fmod(x, y);
+  else if (op == '^')
+    return pow(x, y);
   else
     return 0;
 }

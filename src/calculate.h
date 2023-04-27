@@ -14,11 +14,11 @@ class Checks {
   Checks() = default;
   ~Checks() = default;
 
-  int number_check(char value);
-  int operator_check(char value);
-  int funcs_check(char value);
-  int first_item(char value);
-  int input_check(string vlaue);
+  int numberCheck(char value);
+  int operatorCheck(char value);
+  int funcsCheck(char value);
+  int firstItem(char value);
+  int inputCheck(string vlaue);
 
  private:
   string digit_symbols = "0123456789.";
@@ -32,9 +32,9 @@ class Parser {
   ~Parser() = default;
 
   int priority(char op);
-  void move_less_items(stack<char> *opr_, list<string> *node_);
-  void add_item(char op, stack<char> *opr_, list<string> *node_);
-  void pars_to_polish(string value, stack<char> *opr_, list<string> *node_);
+  void moveLessItems(stack<char> *opr_, list<string> *node_);
+  void addItem(char op, stack<char> *opr_, list<string> *node_);
+  void parsToPolish(string value, stack<char> *opr_, list<string> *node_);
   string convertOperator(char op);
 
  private:
@@ -56,19 +56,43 @@ class Calculate {
 
   double calcOperator(double x, double y, char op);
   // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
-  //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
+  //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}, {"^",
+  //     }};
   double calcFuncs(double x, char op);
-  void initPars(string value) { pars.pars_to_polish(value, &opr, &node); }
+  void initPars(string value) { pars.parsToPolish(value, &opr, &node); }
   void print() {
-    for (auto &i : node) {
+    for (auto &i : items) {
       cout << i << endl;
     }
+  }
+  double calculate(string value) {
+    pars.parsToPolish(value, &opr, &node);
+    double result = 0;
+    for (auto &i : node) {
+      auto item = items.begin();
+      if (check.numberCheck(i.front())) {
+        std::size_t sz = i.size();
+        double d = stod(i, &sz);
+        items.push_back(d);
+      } else if (check.operatorCheck(i.front())) {
+        double y = popItem();
+        double x = popItem();
+        items.push_back(calcOperator(x, y, i.front()));
+      } else if (check.funcsCheck(i.front())) {
+        double x = popItem();
+        items.push_back(calcFuncs(x, i.front()));
+      }
+    }
+    // double y = popItem();
+    // double x = popItem();
+    // result = calcOperator()
+    return result;
   }
 
  private:
   Checks check{};
   Parser pars{};
-  list<double> item{};
+  list<double> items{};
   list<string> node{};
   stack<char> opr{};
 };
