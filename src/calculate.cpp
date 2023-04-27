@@ -8,9 +8,6 @@ int Checks::operator_check(char value) {
   return operator_symbols.find(value) != string::npos;
 }
 int Checks::funcs_check(char value) {
-  // {"COS", 11},  {"SIN", 12},  {"TAN", 13}, {"ACOS", 14}, {"ASIN", 15},
-  //     {"ATAN", 16}, {"SQRT", 17}, {"LN", 18},  {"LOG", 19},  {"MOD", 2}};
-
   return math_sympols.find(value) != string::npos;
 }
 int Checks::first_item(char value) {
@@ -51,12 +48,6 @@ int Checks::input_check(string value) {
 
 // class Parser
 
-void Parser::clear() {
-  this->node_.clear();
-  while (!opr_.empty()) {
-    this->opr_.pop();
-  }
-}
 int Parser::priority(char op) {
   int result = 10;
   if (op == '+' || op == '-')
@@ -76,42 +67,43 @@ string Parser::convertOperator(char op) {
   temp.push_back(op);
   return temp;
 }
-void Parser::move_less_items() {
-  auto sz = opr_.size();
+void Parser::move_less_items(stack<char> *opr_, list<string> *node_) {
+  auto sz = opr_->size();
   for (auto i = 0; i != sz; ++i) {
-    node_.push_back(convertOperator(opr_.top()));
-    opr_.pop();
+    node_->push_back(convertOperator(opr_->top()));
+    opr_->pop();
   }
 }
-void Parser::add_item(char op) {
-  if (!opr_.empty()) {
+void Parser::add_item(char op, stack<char> *opr_, list<string> *node_) {
+  if (!opr_->empty()) {
     if (op == ')') {
-      while (opr_.top() != '(') {
-        node_.push_back(convertOperator(opr_.top()));
-        opr_.pop();
+      while (opr_->top() != '(') {
+        node_->push_back(convertOperator(opr_->top()));
+        opr_->pop();
       }
-      opr_.pop();
+      opr_->pop();
       return;
     }
-    if (priority(op) <= priority(opr_.top())) {
+    if (priority(op) <= priority(opr_->top())) {
       if (priority(op) == 0 || priority(op) == 3) {
-        opr_.push(op);
+        opr_->push(op);
       } else {
-        while (priority(op) <= priority(opr_.top())) {
-          node_.push_back(convertOperator(opr_.top()));
-          opr_.pop();
-          if (opr_.empty()) break;
+        while (priority(op) <= priority(opr_->top())) {
+          node_->push_back(convertOperator(opr_->top()));
+          opr_->pop();
+          if (opr_->empty()) break;
         }
-        opr_.push(op);
+        opr_->push(op);
       }
     } else {
-      opr_.push(op);
+      opr_->push(op);
     }
   } else {
-    opr_.push(op);
+    opr_->push(op);
   }
 }
-void Parser::pars_to_polish(string value) {
+void Parser::pars_to_polish(string value, stack<char> *opr_,
+                            list<string> *node_) {
   if (check.input_check(value)) {
     for (size_t i = 0; i != value.size(); ++i) {
       if (check.number_check(value[i])) {
@@ -119,24 +111,68 @@ void Parser::pars_to_polish(string value) {
         double d = stod(value.substr(t), &t);
         i += t - 1;
         string str = to_string(d);
-        this->node_.push_back(str);
+        node_->push_back(str);
       } else {
         if ((value[i] == '-' && value[i - 1] == '(') ||
             ((i == 0) && (value[i] == '-')))
-          this->node_.push_back("0");
-        add_item(value[i]);
+          node_->push_back("0");
+        add_item(value[i], opr_, node_);
       }
     }
-    move_less_items();
+    move_less_items(opr_, node_);
   }
 }
-string Parser::check_pars() {
-  string str;
-  for (auto &i : node_) {
-    str.append(i);
-  }
-  for (auto &i : str) {
-    cout << i;
-  }
-  return str;
+
+// class Calculate
+
+double Calculate::popItem() {
+  double x = item.back();
+  item.pop_back();
+  return x;
 }
+double Calculate::calcOperator(double x, double y, char op) {
+  if (op == '+')
+    return plus(x, y);
+  else if (op == '-')
+    return sub(x, y);
+  else if (op == '*')
+    return mul(x, y);
+  else if (op == '/')
+    return div(x, y);
+  else if (op == '%')
+    return fmod(x, y);
+  else
+    return 0;
+}
+double Calculate::calcFuncs(double x, char op) {
+  double result;
+  if (op == '!')
+    result = cos(x);
+  else if (op == '@')
+    result = sin(x);
+  else if (op == '#')
+    result = tan(x);
+  else if (op == '$')
+    result = acos(x);
+  else if (op == '_')
+    result = asin(x);
+  else if (op == 'v')
+    result = atan(x);
+  else if (op == 'b')
+    result = sqrt(x);
+  else if (op == 'u')
+    result = log(x);
+  else if (op == 'p')
+    result = log10(x);
+  return result;
+}
+// string Parser::check_pars() {
+//   string str;
+//   for (auto &i : node_) {
+//     str.append(i);
+//   }
+//   for (auto &i : str) {
+//     cout << i;
+//   }
+//   return str;
+// }

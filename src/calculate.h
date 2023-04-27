@@ -1,7 +1,8 @@
+#include <math.h>
+
 #include <cstdlib>
 #include <iostream>
 #include <list>
-#include <map>
 #include <stack>
 #include <string>
 #include <utility>
@@ -22,12 +23,6 @@ class Checks {
  private:
   string digit_symbols = "0123456789.";
   string operator_symbols = "+-*/()^%";
-  // string str_symbols = "sincoatqrlgmd";
-  map<string, int> math_preorites{{"!", 11}, {"@", 12}, {"#", 13}, {"$", 14},
-                                  {"_", 15}, {"v", 16}, {"b", 17}, {"u", 18},
-                                  {"p", 19}, {"%", 2}};
-  // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
-  //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
   string math_sympols = "!@#$_vbup";
 };
 
@@ -36,21 +31,46 @@ class Parser {
   Parser() = default;
   ~Parser() = default;
 
-  void clear();
   int priority(char op);
-  void move_less_items();
-  void add_item(char op);
-  void pars_to_polish(string value);
-  void print() {
-    for (auto &i : node_) cout << i << endl;
-  }
+  void move_less_items(stack<char> *opr_, list<string> *node_);
+  void add_item(char op, stack<char> *opr_, list<string> *node_);
+  void pars_to_polish(string value, stack<char> *opr_, list<string> *node_);
   string convertOperator(char op);
-  string check_pars();
 
  private:
   Checks check{};
-  list<string> node_{};
-  stack<char> opr_{};
+};
+
+class Calculate {
+ public:
+  Calculate() = default;
+  ~Calculate() = default;
+
+ public:
+  double plus(double x, double y) { return x + y; }
+  double sub(double x, double y) { return x - y; }
+  double mul(double x, double y) { return x * y; }
+  double div(double x, double y) { return x / y; }
+
+  double popItem();
+
+  double calcOperator(double x, double y, char op);
+  // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
+  //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
+  double calcFuncs(double x, char op);
+  void initPars(string value) { pars.pars_to_polish(value, &opr, &node); }
+  void print() {
+    for (auto &i : node) {
+      cout << i << endl;
+    }
+  }
+
+ private:
+  Checks check{};
+  Parser pars{};
+  list<double> item{};
+  list<string> node{};
+  stack<char> opr{};
 };
 
 // double Parser::calc(double x, double y, char op) {
@@ -66,17 +86,7 @@ class Parser {
 //     return 0;
 // }
 
-// double plus(double x, double y) { return x + y; }
-// double sub(double x, double y) { return x - y; }
-// double mul(double x, double y) { return x * y; }
-// double div(double x, double y) { return x / y; }
-
 // double calc(double x, double y, char op);
-// double pop_item() {
-//   double x = node_.back();
-//   node_.pop_back();
-//   return x;
-// }
 
 // void calcs(char op) {
 //   double y = pop_item();
