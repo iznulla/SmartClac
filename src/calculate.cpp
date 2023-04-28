@@ -125,7 +125,7 @@ void Parser::parsToPolish(string value, stack<char> *opr_,
 
 // class Calculate
 
-double Calculate::popItem() {
+double Calculate::getItem() {
   double x = items.back();
   items.pop_back();
   return x;
@@ -166,6 +166,26 @@ double Calculate::calcFuncs(double x, char op) {
     result = log(x);
   else if (op == 'p')
     result = log10(x);
+  return result;
+}
+double Calculate::calculate(string value) {
+  pars.parsToPolish(value, &opr, &node);
+  double result = 0;
+  for (auto &i : node) {
+    if (check.numberCheck(i.front())) {
+      std::size_t sz = i.size();
+      double d = stod(i, &sz);
+      items.push_back(d);
+    } else if (check.operatorCheck(i.front())) {
+      double y = getItem();
+      double x = getItem();
+      items.push_back(calcOperator(x, y, i.front()));
+    } else if (check.funcsCheck(i.front())) {
+      double x = getItem();
+      items.push_back(calcFuncs(x, i.front()));
+    }
+  }
+  result = getItem();
   return result;
 }
 // string Parser::check_pars() {

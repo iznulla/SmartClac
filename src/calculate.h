@@ -52,7 +52,7 @@ class Calculate {
   double mul(double x, double y) { return x * y; }
   double div(double x, double y) { return x / y; }
 
-  double popItem();
+  double getItem();
 
   double calcOperator(double x, double y, char op);
   // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
@@ -65,29 +65,7 @@ class Calculate {
       cout << i << endl;
     }
   }
-  double calculate(string value) {
-    pars.parsToPolish(value, &opr, &node);
-    double result = 0;
-    for (auto &i : node) {
-      auto item = items.begin();
-      if (check.numberCheck(i.front())) {
-        std::size_t sz = i.size();
-        double d = stod(i, &sz);
-        items.push_back(d);
-      } else if (check.operatorCheck(i.front())) {
-        double y = popItem();
-        double x = popItem();
-        items.push_back(calcOperator(x, y, i.front()));
-      } else if (check.funcsCheck(i.front())) {
-        double x = popItem();
-        items.push_back(calcFuncs(x, i.front()));
-      }
-    }
-    // double y = popItem();
-    // double x = popItem();
-    // result = calcOperator()
-    return result;
-  }
+  double calculate(string value);
 
  private:
   Checks check{};
