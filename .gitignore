@@ -1,4 +1,5 @@
 build
 src/cmake-build-debug
 src/.gitkeep
+src/build*
 .vscode
