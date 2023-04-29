@@ -78,4 +78,8 @@ TEST_F(TestCalculate, Calculating) {
   EXPECT_NEAR(calc.calculate("12.543+!(2+@(2-1)+12)+543+!(2+@(2-1))"),
               553.9401958, 0.0000001);
   EXPECT_NEAR(calc.calculate("2+1-3+9*12/3+31*241"), 7507, 0.0000001);
+  //   EXPECT_NEAR(calc.calculate("5^@(1)^2"), 3.1255185, 0.0000001);
+  //   cout << calc.calculate("5^@(1)^2") << endl;
+  double er = calc.calculate("2+2");
+  cout << er;
 }

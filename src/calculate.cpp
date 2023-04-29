@@ -85,7 +85,7 @@ void Parser::addItem(char op, stack<char> *opr_, list<string> *node_) {
       return;
     }
     if (priority(op) <= priority(opr_->top())) {
-      if (priority(op) == 0 || priority(op) == 3) {
+      if (priority(op) == 0 || (priority(op) == 3)) {
         opr_->push(op);
       } else {
         while (priority(op) <= priority(opr_->top())) {
@@ -170,6 +170,9 @@ double Calculate::calcFuncs(double x, char op) {
 }
 double Calculate::calculate(string value) {
   pars.parsToPolish(value, &opr, &node);
+  // for (auto &i : node) {
+  //   cout << i;
+  // }
   double result = 0;
   for (auto &i : node) {
     if (check.numberCheck(i.front())) {
@@ -188,13 +191,3 @@ double Calculate::calculate(string value) {
   result = getItem();
   return result;
 }
-// string Parser::check_pars() {
-//   string str;
-//   for (auto &i : node_) {
-//     str.append(i);
-//   }
-//   for (auto &i : str) {
-//     cout << i;
-//   }
-//   return str;
-// }

@@ -1,3 +1,5 @@
+
+
 #include <math.h>
 
 #include <cstdlib>
@@ -59,12 +61,6 @@ class Calculate {
   //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}, {"^",
   //     }};
   double calcFuncs(double x, char op);
-  void initPars(string value) { pars.parsToPolish(value, &opr, &node); }
-  void print() {
-    for (auto &i : items) {
-      cout << i << endl;
-    }
-  }
   double calculate(string value);
 
  private:
@@ -74,29 +70,3 @@ class Calculate {
   list<string> node{};
   stack<char> opr{};
 };
-
-// double Parser::calc(double x, double y, char op) {
-//   if (op == '+')
-//     return plus(x, y);
-//   else if (op == '-')
-//     return sub(x, y);
-//   else if (op == '*')
-//     return mul(x, y);
-//   else if (op == '/')
-//     return div(x, y);
-//   else
-//     return 0;
-// }
-
-// double calc(double x, double y, char op);
-
-// void calcs(char op) {
-//   double y = pop_item();
-//   double x = pop_item();
-//   node_.push_back(calc(x, y, opr_.top()));
-//   opr_.pop();
-// }
-
-// std::size_t t = i;
-// d = stod(value.substr(t), &t);
-// i += t;
