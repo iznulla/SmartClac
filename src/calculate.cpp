@@ -1,5 +1,7 @@
 #include "calculate.h"
 
+#include <QDebug>
+
 // class Check
 int Checks::numberCheck(char value) {
   return digit_symbols.find(value) != string::npos;
@@ -16,13 +18,15 @@ int Checks::firstItem(char value) {
   return 1;
 }
 int Checks::inputCheck(string value) {
-  int valid_operator = 0, scopes = 0, math_symb = 0, is_pre_num = 0, close = 0;
+  int valid_operator = 0, scopes = 0, math_symb = 0, is_pre_num = 0, close = 0,
+      num = 0;
   if (!firstItem(value[0])) return 0;
   for (auto &i : value) {
     if (!numberCheck(i) && !operatorCheck(i) && !funcsCheck(i)) return 0;
     if (numberCheck(i)) {
       if (close) return 0;
       valid_operator = 0, ++is_pre_num;
+      ++num;
     }
     if (funcsCheck(i)) {
       ++math_symb, --valid_operator;
@@ -42,7 +46,7 @@ int Checks::inputCheck(string value) {
       is_pre_num = 0;
     }
   }
-  if (valid_operator || scopes || math_symb) return 0;
+  if (valid_operator || scopes || math_symb || !num) return 0;
   return 1;
 }
 
@@ -69,7 +73,7 @@ string Parser::convertOperator(char op) {
 }
 void Parser::moveLessItems(stack<char> *opr_, list<string> *node_) {
   auto sz = opr_->size();
-  for (auto i = 0; i != sz; ++i) {
+  for (string::size_type i = 0; i != sz; ++i) {
     node_->push_back(convertOperator(opr_->top()));
     opr_->pop();
   }
@@ -120,7 +124,8 @@ void Parser::parsToPolish(string value, stack<char> *opr_,
       }
     }
     moveLessItems(opr_, node_);
-  }
+  } else
+    throw invalid_argument("ERROR");
 }
 
 // class Calculate
@@ -131,20 +136,27 @@ double Calculate::getItem() {
   return x;
 }
 double Calculate::calcOperator(double x, double y, char op) {
-  if (op == '+')
-    return plus(x, y);
-  else if (op == '-')
-    return sub(x, y);
-  else if (op == '*')
-    return mul(x, y);
-  else if (op == '/')
-    return div(x, y);
-  else if (op == '%')
-    return fmod(x, y);
-  else if (op == '^')
-    return pow(x, y);
-  else
-    return 0;
+  double result = 0.0;
+  if (op == '+') {
+    result = plus(x, y);
+  } else if (op == '-') {
+    result = sub(x, y);
+  } else if (op == '*') {
+    result = mul(x, y);
+  } else if (op == '/') {
+    if (y == 0)
+      throw invalid_argument("ERROR");
+    else
+      result = div(x, y);
+  } else if (op == '%') {
+    if (y == 0)
+      throw invalid_argument("ERROR");
+    else
+      result = fmod(x, y);
+  } else if (op == '^') {
+    result = pow(x, y);
+  }
+  return result;
 }
 double Calculate::calcFuncs(double x, char op) {
   double result;
@@ -164,15 +176,19 @@ double Calculate::calcFuncs(double x, char op) {
     result = sqrt(x);
   else if (op == 'u')
     result = log(x);
-  else if (op == 'p')
+  else
     result = log10(x);
   return result;
 }
+void Calculate::calcResult(QString &lines) {
+  if (lines.size() == 0) throw invalid_argument("ERROR");
+  double res = 0;
+  res = calculate(lines.toStdString());
+  lines = QString::number(res, 'g', 12);
+}
 double Calculate::calculate(string value) {
+  node.clear();
   pars.parsToPolish(value, &opr, &node);
-  // for (auto &i : node) {
-  //   cout << i;
-  // }
   double result = 0;
   for (auto &i : node) {
     if (check.numberCheck(i.front())) {

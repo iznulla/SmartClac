@@ -29,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_9, SIGNAL(clicked()), this, SLOT(inputItems()));
     connect(ui->pushButton_X, SIGNAL(clicked()), this, SLOT(inputItems()));
 
-    connect(ui->pushButton_add, SIGNAL(clicked()), this, SLOT(inputItems()));
-    connect(ui->pushButton_sub, SIGNAL(clicked()), this, SLOT(inputItems()));
-    connect(ui->pushButton_mul, SIGNAL(clicked()), this, SLOT(inputItems()));
-    connect(ui->pushButton_div, SIGNAL(clicked()), this, SLOT(inputItems()));
+    connect(ui->pushButton_add, SIGNAL(clicked()), this, SLOT(inputOperators()));
+    connect(ui->pushButton_sub, SIGNAL(clicked()), this, SLOT(inputOperators()));
+    connect(ui->pushButton_mul, SIGNAL(clicked()), this, SLOT(inputOperators()));
+    connect(ui->pushButton_div, SIGNAL(clicked()), this, SLOT(inputOperators()));
 
     connect(ui->pushButton_mod, SIGNAL(clicked()), this, SLOT(inputItems()));
     connect(ui->pushButton_pow, SIGNAL(clicked()), this, SLOT(inputItems()));
@@ -46,26 +46,67 @@ MainWindow::~MainWindow()
 
 void MainWindow::inputItems() {
     QPushButton *button = (QPushButton *)sender();
-
-      QString new_label, show_label;
-      new_label = (ui->result_show->text() + button->accessibleName());
-      show_label = (ui->result_show->text() + button->text());
-      ui->result_show->setText(show_label);
+    calc_text.append(button->accessibleName());
+    ui->result_show->setText(ui->result_show->text() + button->text());
 }
-
+void MainWindow::inputOperators() {
+    QPushButton *button = (QPushButton *)sender();
+    calc_text.append(button->accessibleName());
+    ui->result_show->setText(ui->result_show->text() + button->text());
+    --check_dot;
+}
 void MainWindow::on_pushButton_AC_clicked()
 {
+    check_dot = 0, check_scope = 0;
     ui->result_show->clear();
+    calc_text.clear();
+
+}
+
+void MainWindow::on_pushButton_Del_clicked()
+{
+    if (!calc_text.isEmpty())
+    {
+        calc_text.chop(1);
+        ui->result_show->setText(ui->result_show->text().chopped(1));
+    }
+
 }
 
 
+void MainWindow::on_pushButton_dot_clicked()
+{
+    if (!check_dot) {
+        calc_text.append(".");
+        ui->result_show->setText(ui->result_show->text() + ".");
+        check_dot++;
+    }
+}
 void MainWindow::on_pushButton_eq_clicked()
 {
-    double res;
-    string tt;
-    tt = ui->result_show->text().toStdString();
-    res = calc.calculate(tt);
-    QString end_calc = QString::number(res, 'g', 14);
-    ui->result_show->setText(end_calc);
+    try {
+        calc.calcs(&calc_text);
+        ui->result_show->setText(calc_text);
+        calc_text.clear();
+    }
+    catch (...) {
+        ui->result_show->clear();
+        ui->result_show->setText("ERROR");
+    }
+}
+
+void MainWindow::on_pushButton_scop_open_clicked()
+{
+    calc_text.append("(");
+    ui->result_show->setText(ui->result_show->text() + "(");
+    ++check_dot;
+    ++check_scope;
+}
+
+void MainWindow::on_pushButton_scop_close_clicked()
+{
+    calc_text.append(")");
+    ui->result_show->setText(ui->result_show->text() + ")");
+    check_dot++;
 }
 

@@ -1,6 +1,7 @@
 
 
 #include <math.h>
+#include <QString>
 
 #include <cstdlib>
 #include <iostream>
@@ -46,6 +47,7 @@ class Parser {
 class Calculate {
  public:
   Calculate() = default;
+  // Calculate(Calculate  : cal
   ~Calculate() = default;
 
  public:
@@ -53,7 +55,7 @@ class Calculate {
   double sub(double x, double y) { return x - y; }
   double mul(double x, double y) { return x * y; }
   double div(double x, double y) { return x / y; }
-
+  int checkLine(string value) { return check.inputCheck(value); }
   double getItem();
 
   double calcOperator(double x, double y, char op);
@@ -62,6 +64,7 @@ class Calculate {
   //     }};
   double calcFuncs(double x, char op);
   double calculate(string value);
+  void calcResult(QString &lines);
 
  private:
   Checks check{};

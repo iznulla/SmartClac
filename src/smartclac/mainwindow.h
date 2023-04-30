@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "../calculate.h"
+#include "../controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,15 +15,25 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    Calculate calc{};
+
 
 private:
     Ui::MainWindow *ui;
+    Control calc{};
+    QString calc_text;
+
+private:
+    int check_dot;
+    int check_scope;
 
 private slots:
     void inputItems();
+    void inputOperators();
     void on_pushButton_AC_clicked();
     void on_pushButton_eq_clicked();
-friend Calculate;
+    void on_pushButton_Del_clicked();
+    void on_pushButton_dot_clicked();
+    void on_pushButton_scop_open_clicked();
+    void on_pushButton_scop_close_clicked();
 };
 #endif // MAINWINDOW_H

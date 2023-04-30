@@ -10,11 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     ../calculate.cpp \
+    ../controller.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     ../calculate.h \
+    ../controller.h \
     mainwindow.h
 
 
