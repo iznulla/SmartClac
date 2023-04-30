@@ -1,7 +1,5 @@
 #include "calculate.h"
 
-#include <QDebug>
-
 // class Check
 int Checks::numberCheck(char value) {
   return digit_symbols.find(value) != string::npos;
@@ -180,11 +178,11 @@ double Calculate::calcFuncs(double x, char op) {
     result = log10(x);
   return result;
 }
-void Calculate::calcResult(QString &lines) {
+double Calculate::calcResult(string &lines) {
   if (lines.size() == 0) throw invalid_argument("ERROR");
   double res = 0;
-  res = calculate(lines.toStdString());
-  lines = QString::number(res, 'g', 12);
+  res = calculate(lines);
+  return res;
 }
 double Calculate::calculate(string value) {
   node.clear();

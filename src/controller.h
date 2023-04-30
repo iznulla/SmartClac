@@ -1,5 +1,4 @@
 #include <QString>
-
 #include "calculate.h"
 
 class Control {
@@ -7,7 +6,7 @@ class Control {
   Control() = default;
   ~Control() = default;
 
-  void calcs(QString *lines);
+  void calcs(QString &lines);
 
  private:
   Calculate calc{};

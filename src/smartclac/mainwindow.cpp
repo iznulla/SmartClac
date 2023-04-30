@@ -85,7 +85,7 @@ void MainWindow::on_pushButton_dot_clicked()
 void MainWindow::on_pushButton_eq_clicked()
 {
     try {
-        calc.calcs(&calc_text);
+        calc.calcs(calc_text);
         ui->result_show->setText(calc_text);
         calc_text.clear();
     }

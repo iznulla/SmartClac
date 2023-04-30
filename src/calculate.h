@@ -1,7 +1,6 @@
 
 
 #include <math.h>
-#include <QString>
 
 #include <cstdlib>
 #include <iostream>
@@ -64,7 +63,7 @@ class Calculate {
   //     }};
   double calcFuncs(double x, char op);
   double calculate(string value);
-  void calcResult(QString &lines);
+  double calcResult(string &lines);
 
  private:
   Checks check{};
