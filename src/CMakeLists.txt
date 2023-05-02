@@ -17,7 +17,7 @@ FetchContent_MakeAvailable(googletest)
 
 # add_executable(Google_Tests_run tests_vector.cc ../src/sequence/s21_vector.h )
 # add_executable(Google_Tests_run tests_map.cc ../src/sorted_container/associative_container/s21_map.h)
-add_executable(Google_Tests_run test_calculate.cc calculate.cpp calculate.h)
+add_executable(Google_Tests_run test_calculate.cc calculate.cpp calculate.h calcplot.cpp)
 
 # add_executable(Google_Tests_run t)
 # add_executable(Google_Tests_run tests_array.cc ../src/sequence/s21_array.cc ../src/sequence/s21_array.h)

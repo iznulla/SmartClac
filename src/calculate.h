@@ -23,7 +23,7 @@ class Checks {
   int inputCheck(string vlaue);
 
  private:
-  string digit_symbols = "0123456789.";
+  string digit_symbols = "0123456789.X";
   string operator_symbols = "+-*/()^%";
   string math_sympols = "!@#$_vbup";
 };

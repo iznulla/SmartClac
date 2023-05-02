@@ -56,7 +56,10 @@ void MainWindow::inputOperators() {
     --check_dot;
 }
 void MainWindow::on_pushButton_AC_clicked()
+
 {
+    ui->widget->clearGraphs();
+    ui->widget->replot();
     check_dot = 0, check_scope = 0;
     ui->result_show->clear();
     calc_text.clear();
@@ -108,5 +111,29 @@ void MainWindow::on_pushButton_scop_close_clicked()
     calc_text.append(")");
     ui->result_show->setText(ui->result_show->text() + ")");
     check_dot++;
+}
+
+
+void MainWindow::on_pushButton_graphic_clicked()
+{
+    ui->widget->clearGraphs();
+    double xB = ui->doubleSpinBox_xBegin->text().toDouble();
+    double xE = ui->doubleSpinBox_xEnd->text().toDouble();
+
+    ui->widget->xAxis->setRange(xB, xE);
+    ui->widget->yAxis->setRange(xB, xE);
+    try {
+        calc.calcing_plot(xB, xE, calc_text, &x, &y);
+        ui->widget->addGraph();
+        ui->widget->graph(0)->setData(x, y);
+        ui->widget->replot();
+        x.clear();
+        y.clear();
+    }
+    catch (...) {
+        ui->result_show->clear();
+        ui->result_show->setText("ERROR");
+    }
+
 }
 

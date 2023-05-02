@@ -25,6 +25,8 @@ private:
 private:
     int check_dot;
     int check_scope;
+    QVector<double> x, y;
+
 
 private slots:
     void inputItems();
@@ -35,5 +37,6 @@ private slots:
     void on_pushButton_dot_clicked();
     void on_pushButton_scop_open_clicked();
     void on_pushButton_scop_close_clicked();
+    void on_pushButton_graphic_clicked();
 };
 #endif // MAINWINDOW_H

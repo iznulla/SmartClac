@@ -5,3 +5,25 @@ void Control::calcs(QString &lines) {
     double result = calc.calcResult(cast_expression_to_str);
     lines = QString::number(result, 'g', 12);
 }
+
+void Control::calcing_plot(double xBegin, double xEnd, QString data, QVector<double> *_x, QVector<double> *_y) {
+    double X, Y;
+    x.clear();
+    y.clear();
+    for (X = xBegin; X <= xEnd; X += h) {
+        QString line = data, value;
+        if (X < 0.01 && X > -0.01) X = 0;
+        x.push_back(X);
+        value = line.replace("X", ('(' + QString::number(X) + ')'));
+        if (calc.checkLine(value.toStdString())) {
+            if (value.toStdString().data())
+                Y = calc.calculate(value.toStdString());
+            else
+                Y = 0;
+        }
+        y.push_back(Y);
+    }
+    *_x = x;
+    *_y = y;
+}
+
