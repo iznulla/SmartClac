@@ -27,7 +27,8 @@ int Checks::inputCheck(string value) {
       ++num;
     }
     if (funcsCheck(i)) {
-      ++math_symb, --valid_operator;
+      if (valid_operator) --valid_operator;
+      ++math_symb;
     }
     if (operatorCheck(i)) {
       if (i == '(') {

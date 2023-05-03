@@ -46,7 +46,6 @@ class Parser {
 class Calculate {
  public:
   Calculate() = default;
-  // Calculate(Calculate  : cal
   ~Calculate() = default;
 
  public:

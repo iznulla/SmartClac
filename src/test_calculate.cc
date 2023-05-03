@@ -14,6 +14,7 @@ TEST_F(TestCalculate, inputValidationTest) {
   // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
   //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
   EXPECT_EQ(check.inputCheck("12543"), 1);
+  EXPECT_EQ(check.inputCheck("@(-5)"), 1);
   EXPECT_EQ(check.inputCheck("125^+43"), 0);
   EXPECT_EQ(check.inputCheck("12.5^43"), 1);
   EXPECT_EQ(check.inputCheck("12.543"), 1);
@@ -49,8 +50,8 @@ TEST_F(TestCalculate, Calculating) {
   EXPECT_EQ(calc.calculate("5*(-3)"), -15);
   EXPECT_NEAR(calc.calculate("5/3"), 1.6666667, 0.0000001);
 
-  // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
-  //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
+  //   // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
+  //   //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
   EXPECT_NEAR(calc.calculate("2*(3+1)*2"), 16, 0.0000001);
   EXPECT_NEAR(calc.calculate("2*(((3+1)-1))*2"), 12, 0.0000001);
   EXPECT_NEAR(calc.calculate("(3+5)*2+3/(1-4)"), 15, 0.0000001);
@@ -78,6 +79,6 @@ TEST_F(TestCalculate, Calculating) {
   EXPECT_NEAR(calc.calculate("12.543+!(2+@(2-1)+12)+543+!(2+@(2-1))"),
               553.9401958, 0.0000001);
   EXPECT_NEAR(calc.calculate("2+1-3+9*12/3+31*241"), 7507, 0.0000001);
-  //   EXPECT_NEAR(calc.calculate("5^@(1)^2"), 3.1255185, 0.0000001);
-  //   cout << calc.calculate("5^@(1)^2") << endl;
+  //   //   EXPECT_NEAR(calc.calculate("5^@(1)^2"), 3.1255185, 0.0000001);
+  //   //   cout << calc.calculate("5^@(1)^2") << endl;
 }

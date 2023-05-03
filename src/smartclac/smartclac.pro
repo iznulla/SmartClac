@@ -17,6 +17,7 @@ SOURCES += \
     qcustomplot.cpp
 
 HEADERS += \
+    ../calcplot.h \
     ../calculate.h \
     ../controller.h \
     mainwindow.h \
