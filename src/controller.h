@@ -1,6 +1,6 @@
 #include <QString>
 #include <QVector>
-#include "calculate.h"
+#include "calcplot.h"
 
 class Control {
  public:
@@ -9,7 +9,7 @@ class Control {
 
   void calcs(QString &lines);
 
-  void calcing_plot(double xBegin, double xEnd, QString data, QVector<double> *_x, QVector<double> *_y);
+  std::pair<QVector<double>, QVector<double>> drawPlot(double xBegin, double xEnd, QString data);
 
   QVector<double> getX() {
       return x;
@@ -20,6 +20,7 @@ class Control {
 
  private:
   Calculate calc{};
+  PlotCalc calcPlot{};
   double h = 0.1;
   QVector<double> x, y;
 };

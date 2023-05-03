@@ -25,7 +25,6 @@ private:
 private:
     int check_dot;
     int check_scope;
-    QVector<double> x, y;
 
 
 private slots:

@@ -123,12 +123,12 @@ void MainWindow::on_pushButton_graphic_clicked()
     ui->widget->xAxis->setRange(xB, xE);
     ui->widget->yAxis->setRange(xB, xE);
     try {
-        calc.calcing_plot(xB, xE, calc_text, &x, &y);
+        auto getXY = calc.drawPlot(xB, xE, calc_text);
         ui->widget->addGraph();
-        ui->widget->graph(0)->setData(x, y);
+        ui->widget->graph(0)->setData(getXY.first,getXY.second);
         ui->widget->replot();
-        x.clear();
-        y.clear();
+        getXY.first.clear();
+        getXY.second.clear();
     }
     catch (...) {
         ui->result_show->clear();
