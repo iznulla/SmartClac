@@ -11,13 +11,6 @@ class Control {
 
   std::pair<QVector<double>, QVector<double>> drawPlot(double xBegin, double xEnd, QString data);
 
-  QVector<double> getX() {
-      return x;
-  }
-  QVector<double> getY() {
-      return y;
-  }
-
  private:
   Calculate calc{};
   PlotCalc calcPlot{};

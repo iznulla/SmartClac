@@ -137,3 +137,9 @@ void MainWindow::on_pushButton_graphic_clicked()
 
 }
 
+
+void MainWindow::on_pushButton_credit_clicked()
+{
+    credit.show();
+}
+

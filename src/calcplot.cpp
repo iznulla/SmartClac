@@ -12,7 +12,8 @@ std::pair<QVector<double>, QVector<double>> PlotCalc::calcing_plot(double xBegin
           value = line.replace("X", '(' + (QString::number(X)) + ')');
           if (calc.checkLine(value.toStdString()))
               Y = calc.calculate(value.toStdString());
-          y.push_back(Y);
+
+            y.push_back(Y);
       }
      return std::pair(x, y);
   }

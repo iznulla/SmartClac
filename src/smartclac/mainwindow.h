@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "creditwindow.h"
 #include "../controller.h"
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +21,7 @@ public:
 private:
     Ui::MainWindow *ui;
     Control calc{};
+    CreditWindow credit;
     QString calc_text;
 
 private:
@@ -37,5 +39,6 @@ private slots:
     void on_pushButton_scop_open_clicked();
     void on_pushButton_scop_close_clicked();
     void on_pushButton_graphic_clicked();
+    void on_pushButton_credit_clicked();
 };
 #endif // MAINWINDOW_H

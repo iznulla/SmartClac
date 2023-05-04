@@ -136,12 +136,17 @@ double Calculate::getItem() {
 }
 double Calculate::calcOperator(double x, double y, char op) {
   double result = 0.0;
+  try {
   if (op == '+') {
     result = plus(x, y);
   } else if (op == '-') {
     result = sub(x, y);
   } else if (op == '*') {
+      try {
     result = mul(x, y);
+      } catch (...) {
+          throw invalid_argument("NNN");
+      }
   } else if (op == '/') {
     if (y == 0)
       throw invalid_argument("ERROR");
@@ -155,6 +160,11 @@ double Calculate::calcOperator(double x, double y, char op) {
   } else if (op == '^') {
     result = pow(x, y);
   }
+  }
+  catch (...) {
+      throw invalid_argument("INVALID INPUT");
+  }
+
   return result;
 }
 double Calculate::calcFuncs(double x, char op) {
