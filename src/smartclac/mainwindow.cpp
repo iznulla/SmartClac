@@ -48,12 +48,13 @@ void MainWindow::inputItems() {
     QPushButton *button = (QPushButton *)sender();
     calc_text.append(button->accessibleName());
     ui->result_show->setText(ui->result_show->text() + button->text());
+    check_dot = 0;
 }
 void MainWindow::inputOperators() {
     QPushButton *button = (QPushButton *)sender();
     calc_text.append(button->accessibleName());
     ui->result_show->setText(ui->result_show->text() + button->text());
-    --check_dot;
+    check_dot = 0;
 }
 void MainWindow::on_pushButton_AC_clicked()
 
