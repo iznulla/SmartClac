@@ -2,6 +2,7 @@
 #define CREDITWINDOW_H
 
 #include <QDialog>
+#include <../controller.h>
 
 namespace Ui {
 class CreditWindow;
@@ -21,6 +22,7 @@ private slots:
 private:
     Ui::CreditWindow *ui;
     double sum_line, precent_line, month_line;
+    Control controll_{};
 };
 
 #endif // CREDITWINDOW_H

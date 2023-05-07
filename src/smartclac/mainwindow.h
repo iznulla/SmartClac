@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "creditwindow.h"
-#include "../controller.h"
+//#include "../controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

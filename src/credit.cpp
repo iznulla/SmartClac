@@ -10,17 +10,18 @@ double Credit::oneMonthAnnu(double ammo_, double rate_, double term_) {
   result = ammo_ * (rate(rate_) + (rate(rate_) / termAndRate(rate_, term_)));
   return result;
 }
-double Credit::percentAmmount(std::vector<double> rate_) {
+double Credit::percentAmmount(QVector<double> rate_) {
   double result = rate_[0];
-  for (auto i = 1; i < rate_.size(); ++i) {
+  for (std::size_t i = 1; i < rate_.size(); ++i) {
     result += rate_[i];
   }
   return result;
 }
 
-std::pair<std::vector<double>, std::vector<double>> Credit::annuCalc(
-    double ammo_, double rate_, double term_) {
-  std::vector<double> debt_p{}, balance_o{};
+std::pair<QVector<double>, QVector<double>> Credit::annuCalc(double ammo_,
+                                                             double rate_,
+                                                             double term_) {
+  QVector<double> debt_p{}, balance_o{};
   double amm = oneMonthAnnu(ammo_, rate_, term_);
   double balance_owed = ammo_;
   double debt_part;
@@ -33,9 +34,10 @@ std::pair<std::vector<double>, std::vector<double>> Credit::annuCalc(
   return std::pair(debt_p, balance_o);
 }
 
-std::pair<std::vector<double>, std::vector<double>> Credit::difCalc(
-    double ammo_, double rate_, double term_) {
-  std::vector<double> debt_p{}, balance_o{};
+std::pair<QVector<double>, QVector<double>> Credit::difCalc(double ammo_,
+                                                            double rate_,
+                                                            double term_) {
+  QVector<double> debt_p{}, balance_o{};
   double amm = oneMonthDif(ammo_, term_);
   double balance_owed = ammo_;
   double debt_part;
@@ -49,13 +51,13 @@ std::pair<std::vector<double>, std::vector<double>> Credit::difCalc(
   return std::pair(debt_p, balance_o);
 }
 
-int main() {
-  Credit cr;
-  std::cout << "Платеж Долговая часть остаток" << std::endl;
-  auto ann = cr.annuCalc(200000, 12, 24);
-  // for (auto i = 0; i < ann.first.size(); ++i) {
-  //   std::cout << ann.first[i] << " " << ann.second[i] << std::endl;
-  // }
-  std::cout << cr.percentAmmount(ann.first) << std::endl;
-  return 0;
-}
+// int main() {
+//   Credit cr;
+//   std::cout << "Платеж Долговая часть остаток" << std::endl;
+//   auto ann = cr.annuCalc(200000, 12, 24);
+//   // for (auto i = 0; i < ann.first.size(); ++i) {
+//   //   std::cout << ann.first[i] << " " << ann.second[i] << std::endl;
+//   // }
+//   std::cout << cr.percentAmmount(ann.first) << std::endl;
+//   return 0;
+// }

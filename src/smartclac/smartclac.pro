@@ -12,6 +12,7 @@ SOURCES += \
     ../calcplot.cpp \
     ../calculate.cpp \
     ../controller.cpp \
+    ../credit.cpp \
     creditwindow.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -21,6 +22,7 @@ HEADERS += \
     ../calcplot.h \
     ../calculate.h \
     ../controller.h \
+    ../credit.h \
     creditwindow.h \
     mainwindow.h \
     qcustomplot.h
