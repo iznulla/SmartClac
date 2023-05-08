@@ -128,6 +128,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_total_sum">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -136,8 +139,20 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="inputMask">
+    <string/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_pereplata">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>460</x>
@@ -145,6 +160,9 @@
      <width>121</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">

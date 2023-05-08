@@ -1,5 +1,6 @@
 #include <math.h>
 
+#include <QString>
 // #include <iostream>
 #include <QVector>
 
@@ -14,7 +15,8 @@ class Credit {
   double oneMonthAnnu(double ammo_, double rate_, double term_);
   double oneMonthDif(double ammo_, double term_) { return ammo_ / term_; }
   double percentage(double ammo, double rate_) { return ammo * rate(rate_); }
-  double percentAmmount(QVector<double> rate_);
+  std::pair<double, double> percentAndAmmount(QString line,
+                                                QVector<double> rate_);
 
   std::pair<QVector<double>, QVector<double>> annuCalc(double ammo_,
                                                        double rate_,

@@ -16,8 +16,8 @@ std::pair<QVector<double>, QVector<double>> Control::CreditCalc(double ammo_,
                                                                 double rate_,
                                                                 double term_,
                                                                 int is_ann) {
-  if (is_ann)
+  if (!is_ann)
     return std::pair(cr.annuCalc(ammo_, rate_, term_));
   else
-    return std::pair(cr.difCalc(ammo_,rate_, term_));
+    return std::pair(cr.difCalc(ammo_, rate_, term_));
 }
