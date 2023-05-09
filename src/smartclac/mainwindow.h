@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "creditwindow.h"
+#include "debit.h"
 //#include "../controller.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +23,7 @@ private:
     Ui::MainWindow *ui;
     Control calc_{};
     CreditWindow credit_;
+    Debit debit_{};
     QString calc_text_;
 
 private:
@@ -40,5 +42,6 @@ private slots:
     void on_pushButton_scop_close_clicked();
     void on_pushButton_graphic_clicked();
     void on_pushButton_credit_clicked();
+    void on_pushButton_debet_clicked();
 };
 #endif // MAINWINDOW_H

@@ -14,6 +14,7 @@ SOURCES += \
     ../controller.cpp \
     ../credit.cpp \
     creditwindow.cpp \
+    debit.cpp \
     main.cpp \
     mainwindow.cpp \
     qcustomplot.cpp
@@ -24,12 +25,14 @@ HEADERS += \
     ../controller.h \
     ../credit.h \
     creditwindow.h \
+    debit.h \
     mainwindow.h \
     qcustomplot.h
 
 
 FORMS += \
     creditwindow.ui \
+    debit.ui \
     mainwindow.ui
 
 # Default rules for deployment.

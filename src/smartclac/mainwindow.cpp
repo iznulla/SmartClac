@@ -144,3 +144,9 @@ void MainWindow::on_pushButton_credit_clicked()
     credit_.show();
 }
 
+
+void MainWindow::on_pushButton_debet_clicked()
+{
+    debit_.show();
+}
+
