@@ -70,7 +70,6 @@ void Debit::on_pushButton_calculate_clicked()
     } else {
         tax_sum = 0;
     }
-    qDebug() << NDFL;
 
 
     if (ui->comboBox_peiod_of_pay->currentText() == "Ежемесячно") {
@@ -85,7 +84,6 @@ void Debit::on_pushButton_calculate_clicked()
     ui->lineEdit_total_sum_dep->setText(line);
     line = QString::number(percents, 'g', 20);
     ui->lineEdit_percents->setText(line);
-    qDebug() << tax_sum;
     line = QString::number(tax_sum);
     ui->lineEdit_tax_sum->setText(line);
 }
