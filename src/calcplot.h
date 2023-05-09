@@ -12,8 +12,8 @@ public:
   std::pair<QVector<double>, QVector<double>> calcing_plot(double xBegin, double xEnd, QString data);
 
   private:
-  double h = 0.1, X, Y;
-  Calculate calc{};
+  double h_ = 0.1, X_, Y_;
+  Calculate calc_{};
   
 
 };

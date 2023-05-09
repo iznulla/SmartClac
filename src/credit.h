@@ -10,19 +10,21 @@ class Credit {
   ~Credit() = default;
 
  public:
-  double rate(double value_) { return value_ / 100 / 12; }
-  double termAndRate(double rate_, double term_);
-  double oneMonthAnnu(double ammo_, double rate_, double term_);
-  double oneMonthDif(double ammo_, double term_) { return ammo_ / term_; }
-  double percentage(double ammo, double rate_) { return ammo * rate(rate_); }
+  double rate(double value) { return value / 100 / 12; }
+  double termAndRate(double rate_credit, double term);
+  double oneMonthAnnu(double ammo, double rate_credit, double term);
+  double oneMonthDif(double ammo, double term) { return ammo / term; }
+  double percentage(double ammo, double rate_credit) {
+    return ammo * rate(rate_credit);
+  }
   std::pair<double, double> percentAndAmmount(QString line,
-                                                QVector<double> rate_);
+                                              QVector<double> rate_credit);
 
-  std::pair<QVector<double>, QVector<double>> annuCalc(double ammo_,
-                                                       double rate_,
-                                                       double term_);
+  std::pair<QVector<double>, QVector<double>> annuCalc(double ammo,
+                                                       double rate_credit,
+                                                       double term);
 
-  std::pair<QVector<double>, QVector<double>> difCalc(double ammo_,
-                                                      double rate_,
-                                                      double term_);
+  std::pair<QVector<double>, QVector<double>> difCalc(double ammo,
+                                                      double rate_credit,
+                                                      double term);
 };

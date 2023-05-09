@@ -2,13 +2,13 @@
 
 // class Check
 int Checks::numberCheck(char value) {
-  return digit_symbols.find(value) != string::npos;
+  return digit_symbols_.find(value) != string::npos;
 }
 int Checks::operatorCheck(char value) {
-  return operator_symbols.find(value) != string::npos;
+  return operator_symbols_.find(value) != string::npos;
 }
 int Checks::funcsCheck(char value) {
-  return math_sympols.find(value) != string::npos;
+  return math_sympols_.find(value) != string::npos;
 }
 int Checks::firstItem(char value) {
   if (operatorCheck(value))
@@ -52,77 +52,77 @@ int Checks::inputCheck(string value) {
 // class Parser
 
 int Parser::priority(char op) {
-  int result = 10;
+  int result = 0;
   if (op == '+' || op == '-')
     result = 1;
   else if (op == '/' || op == '*' || op == '%')
     result = 2;
   else if (op == '^')
     result = 3;
-  else if (check.funcsCheck(op))
+  else if (check_.funcsCheck(op))
     result = 4;
   else if (op == '(')
     result = 0;
   return result;
 }
 string Parser::convertOperator(char op) {
-  string temp;
+    string temp{};
   temp.push_back(op);
   return temp;
 }
-void Parser::moveLessItems(stack<char> *opr_, list<string> *node_) {
-  auto sz = opr_->size();
+void Parser::moveLessItems(stack<char> *opr, list<string> *node) {
+  auto sz = opr->size();
   for (string::size_type i = 0; i != sz; ++i) {
-    node_->push_back(convertOperator(opr_->top()));
-    opr_->pop();
+    node->push_back(convertOperator(opr->top()));
+    opr->pop();
   }
 }
-void Parser::addItem(char op, stack<char> *opr_, list<string> *node_) {
-  if (!opr_->empty()) {
+void Parser::addItem(char op, stack<char> *opr, list<string> *node) {
+  if (!opr->empty()) {
     if (op == ')') {
-      while (opr_->top() != '(') {
-        node_->push_back(convertOperator(opr_->top()));
-        opr_->pop();
+      while (opr->top() != '(') {
+        node->push_back(convertOperator(opr->top()));
+        opr->pop();
       }
-      opr_->pop();
+      opr->pop();
       return;
     }
-    if (priority(op) <= priority(opr_->top())) {
+    if (priority(op) <= priority(opr->top())) {
       if (priority(op) == 0 || (priority(op) == 3)) {
-        opr_->push(op);
+        opr->push(op);
       } else {
-        while (priority(op) <= priority(opr_->top())) {
-          node_->push_back(convertOperator(opr_->top()));
-          opr_->pop();
-          if (opr_->empty()) break;
+        while (priority(op) <= priority(opr->top())) {
+          node->push_back(convertOperator(opr->top()));
+          opr->pop();
+          if (opr->empty()) break;
         }
-        opr_->push(op);
+        opr->push(op);
       }
     } else {
-      opr_->push(op);
+      opr->push(op);
     }
   } else {
-    opr_->push(op);
+    opr->push(op);
   }
 }
-void Parser::parsToPolish(string value, stack<char> *opr_,
-                          list<string> *node_) {
-  if (check.inputCheck(value)) {
+void Parser::parsToPolish(string value, stack<char> *opr,
+                          list<string> *node) {
+  if (check_.inputCheck(value)) {
     for (size_t i = 0; i != value.size(); ++i) {
-      if (check.numberCheck(value[i])) {
+      if (check_.numberCheck(value[i])) {
         std::size_t t = i;
         double d = stod(value.substr(t), &t);
         i += t - 1;
         string str = to_string(d);
-        node_->push_back(str);
+        node->push_back(str);
       } else {
         if ((value[i] == '-' && value[i - 1] == '(') ||
             ((i == 0) && (value[i] == '-')))
-          node_->push_back("0");
-        addItem(value[i], opr_, node_);
+          node->push_back("0");
+        addItem(value[i], opr, node);
       }
     }
-    moveLessItems(opr_, node_);
+    moveLessItems(opr, node);
   } else
     throw invalid_argument("ERROR");
 }
@@ -130,31 +130,27 @@ void Parser::parsToPolish(string value, stack<char> *opr_,
 // class Calculate
 
 double Calculate::getItem() {
-  double x = items.back();
-  items.pop_back();
+  double x = items_.back();
+  items_.pop_back();
   return x;
 }
 double Calculate::calcOperator(double x, double y, char op) {
-  double result = 0.0;
+    double result{};
   try {
   if (op == '+') {
     result = plus(x, y);
   } else if (op == '-') {
     result = sub(x, y);
-  } else if (op == '*') {
-      try {
+  } else if (op == '*') { 
     result = mul(x, y);
-      } catch (...) {
-          throw invalid_argument("NNN");
-      }
   } else if (op == '/') {
     if (y == 0)
-      throw invalid_argument("ERROR");
+      throw invalid_argument("division by zero");
     else
       result = div(x, y);
   } else if (op == '%') {
     if (y == 0)
-      throw invalid_argument("ERROR");
+      throw invalid_argument("division by zero");
     else
       result = fmod(x, y);
   } else if (op == '^') {
@@ -168,7 +164,7 @@ double Calculate::calcOperator(double x, double y, char op) {
   return result;
 }
 double Calculate::calcFuncs(double x, char op) {
-  double result;
+    double result{};
   if (op == '!')
     result = cos(x);
   else if (op == '@')
@@ -191,26 +187,26 @@ double Calculate::calcFuncs(double x, char op) {
 }
 double Calculate::calcResult(string &lines) {
   if (lines.size() == 0) throw invalid_argument("ERROR");
-  double res = 0;
+  double res{};
   res = calculate(lines);
   return res;
 }
 double Calculate::calculate(string value) {
-  node.clear();
-  pars.parsToPolish(value, &opr, &node);
-  double result = 0;
-  for (auto &i : node) {
-    if (check.numberCheck(i.front())) {
+  node_.clear();
+  pars_.parsToPolish(value, &opr_, &node_);
+  double result{};
+  for (auto &i : node_) {
+    if (check_.numberCheck(i.front())) {
       std::size_t sz = i.size();
       double d = stod(i, &sz);
-      items.push_back(d);
-    } else if (check.operatorCheck(i.front())) {
+      items_.push_back(d);
+    } else if (check_.operatorCheck(i.front())) {
       double y = getItem();
       double x = getItem();
-      items.push_back(calcOperator(x, y, i.front()));
-    } else if (check.funcsCheck(i.front())) {
+      items_.push_back(calcOperator(x, y, i.front()));
+    } else if (check_.funcsCheck(i.front())) {
       double x = getItem();
-      items.push_back(calcFuncs(x, i.front()));
+      items_.push_back(calcFuncs(x, i.front()));
     }
   }
   result = getItem();

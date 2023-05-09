@@ -17,11 +17,10 @@ public:
     ~CreditWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_pushButton_cr_calc_clicked();
 
 private:
     Ui::CreditWindow *ui;
-    double sum_line, precent_line, month_line;
     Control controll_{};
 };
 

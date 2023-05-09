@@ -5,15 +5,15 @@ std::pair<QVector<double>, QVector<double>> PlotCalc::calcing_plot(double xBegin
       QVector<double> x, y;
       x.clear();
       y.clear();
-      for (X = xBegin; X <= xEnd; X += h) {
+      for (X_ = xBegin; X_ <= xEnd; X_ += h_) {
           QString line = data, value;
-          if (X < 0.01 && X > -0.01) X = 0;
-          x.push_back(X);
-          value = line.replace("X", '(' + (QString::number(X)) + ')');
-          if (calc.checkLine(value.toStdString()))
-              Y = calc.calculate(value.toStdString());
+          if (X_ < 0.01 && X_ > -0.01) X_ = 0;
+          x.push_back(X_);
+          value = line.replace("X", '(' + (QString::number(X_)) + ')');
+          if (calc_.checkLine(value.toStdString()))
+              Y_ = calc_.calculate(value.toStdString());
 
-            y.push_back(Y);
+            y.push_back(Y_);
       }
      return std::pair(x, y);
   }

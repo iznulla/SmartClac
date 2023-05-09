@@ -1,64 +1,54 @@
 #include "credit.h"
 
-double Credit::termAndRate(double rate_, double term_) {
-  double result;
-  result = pow((1.0 + rate(rate_)), term_) - 1;
+double Credit::termAndRate(double rate_credit, double term) {
+  double result{};
+  result = pow((1.0 + rate(rate_credit)), term) - 1;
   return result;
 }
-double Credit::oneMonthAnnu(double ammo_, double rate_, double term_) {
-  double result;
-  result = ammo_ * (rate(rate_) + (rate(rate_) / termAndRate(rate_, term_)));
+double Credit::oneMonthAnnu(double ammo, double rate_credit, double term) {
+  double result{};
+  result = ammo * (rate(rate_credit) +
+                   (rate(rate_credit) / termAndRate(rate_credit, term)));
   return result;
 }
-std::pair<double, double> Credit::percentAndAmmount(QString line,
-                                              QVector<double> rate_) {
-  double sum_percent = rate_[0];
-  for (qsizetype i = 1; i < rate_.size(); ++i) {
-    sum_percent += rate_[i];
+std::pair<double, double> Credit::percentAndAmmount(
+    QString line, QVector<double> rate_credit) {
+  double sum_percent = rate_credit[0];
+  for (qsizetype i = 1; i < rate_credit.size(); ++i) {
+    sum_percent += rate_credit[i];
   }
   double sum_amm_percent = line.toDouble() + sum_percent;
   return std::pair(sum_percent, sum_amm_percent);
 }
 
-std::pair<QVector<double>, QVector<double>> Credit::annuCalc(double ammo_,
-                                                             double rate_,
-                                                             double term_) {
+std::pair<QVector<double>, QVector<double>> Credit::annuCalc(double ammo,
+                                                             double rate_credit,
+                                                             double term) {
   QVector<double> debt_p{}, balance_o{};
-  double amm = oneMonthAnnu(ammo_, rate_, term_);
-  double balance_owed = ammo_;
-  double debt_part;
-  for (auto i = 0; i < term_; ++i) {
-    debt_p.push_back(percentage(balance_owed, rate_));
-    debt_part = amm - percentage(balance_owed, rate_);
+  double amm = oneMonthAnnu(ammo, rate_credit, term);
+  double balance_owed = ammo;
+  double debt_part{};
+  for (auto i = 0; i < term; ++i) {
+    debt_p.push_back(percentage(balance_owed, rate_credit));
+    debt_part = amm - percentage(balance_owed, rate_credit);
     balance_owed -= debt_part;
     balance_o.push_back(amm);
   }
   return std::pair(debt_p, balance_o);
 }
 
-std::pair<QVector<double>, QVector<double>> Credit::difCalc(double ammo_,
-                                                            double rate_,
-                                                            double term_) {
+std::pair<QVector<double>, QVector<double>> Credit::difCalc(double ammo,
+                                                            double rate_credit,
+                                                            double term) {
   QVector<double> debt_p{}, balance_o{};
-  double amm = oneMonthDif(ammo_, term_);
-  double balance_owed = ammo_;
-  double debt_part;
-  for (auto i = 0; i < term_; ++i) {
-    debt_p.push_back(percentage(balance_owed, rate_));
-    debt_part = amm + percentage(balance_owed, rate_);
+  double amm = oneMonthDif(ammo, term);
+  double balance_owed = ammo;
+  double debt_part{};
+  for (auto i = 0; i < term; ++i) {
+    debt_p.push_back(percentage(balance_owed, rate_credit));
+    debt_part = amm + percentage(balance_owed, rate_credit);
     balance_owed -= amm;
     balance_o.push_back(debt_part);
   }
   return std::pair(debt_p, balance_o);
 }
-
-// int main() {
-//   Credit cr;
-//   std::cout << "Платеж Долговая часть остаток" << std::endl;
-//   auto ann = cr.annuCalc(200000, 12, 24);
-//   // for (auto i = 0; i < ann.first.size(); ++i) {
-//   //   std::cout << ann.first[i] << " " << ann.second[i] << std::endl;
-//   // }
-//   std::cout << cr.percentAmmount(ann.first) << std::endl;
-//   return 0;
-// }

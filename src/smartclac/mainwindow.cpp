@@ -46,32 +46,32 @@ MainWindow::~MainWindow()
 
 void MainWindow::inputItems() {
     QPushButton *button = (QPushButton *)sender();
-    calc_text.append(button->accessibleName());
+    calc_text_.append(button->accessibleName());
     ui->result_show->setText(ui->result_show->text() + button->text());
-    check_dot = 0;
+    check_dot_ = 0;
 }
 void MainWindow::inputOperators() {
     QPushButton *button = (QPushButton *)sender();
-    calc_text.append(button->accessibleName());
+    calc_text_.append(button->accessibleName());
     ui->result_show->setText(ui->result_show->text() + button->text());
-    check_dot = 0;
+    check_dot_ = 0;
 }
 void MainWindow::on_pushButton_AC_clicked()
 
 {
     ui->widget->clearGraphs();
     ui->widget->replot();
-    check_dot = 0, check_scope = 0;
+    check_dot_ = 0, check_scope_ = 0;
     ui->result_show->clear();
-    calc_text.clear();
+    calc_text_.clear();
 
 }
 
 void MainWindow::on_pushButton_Del_clicked()
 {
-    if (!calc_text.isEmpty())
+    if (!calc_text_.isEmpty())
     {
-        calc_text.chop(1);
+        calc_text_.chop(1);
         ui->result_show->setText(ui->result_show->text().chopped(1));
     }
 
@@ -80,18 +80,18 @@ void MainWindow::on_pushButton_Del_clicked()
 
 void MainWindow::on_pushButton_dot_clicked()
 {
-    if (!check_dot) {
-        calc_text.append(".");
+    if (!check_dot_) {
+        calc_text_.append(".");
         ui->result_show->setText(ui->result_show->text() + ".");
-        check_dot++;
+        check_dot_++;
     }
 }
 void MainWindow::on_pushButton_eq_clicked()
 {
     try {
-        calc.calcs(calc_text);
-        ui->result_show->setText(calc_text);
-        calc_text.clear();
+        calc_.calcs(calc_text_);
+        ui->result_show->setText(calc_text_);
+        calc_text_.clear();
     }
     catch (...) {
         ui->result_show->clear();
@@ -101,17 +101,17 @@ void MainWindow::on_pushButton_eq_clicked()
 
 void MainWindow::on_pushButton_scop_open_clicked()
 {
-    calc_text.append("(");
+    calc_text_.append("(");
     ui->result_show->setText(ui->result_show->text() + "(");
-    ++check_dot;
-    ++check_scope;
+    ++check_dot_;
+    ++check_scope_;
 }
 
 void MainWindow::on_pushButton_scop_close_clicked()
 {
-    calc_text.append(")");
+    calc_text_.append(")");
     ui->result_show->setText(ui->result_show->text() + ")");
-    check_dot++;
+    check_dot_++;
 }
 
 
@@ -124,7 +124,7 @@ void MainWindow::on_pushButton_graphic_clicked()
     ui->widget->xAxis->setRange(xB, xE);
     ui->widget->yAxis->setRange(xB, xE);
     try {
-        auto getXY = calc.drawPlot(xB, xE, calc_text);
+        auto getXY = calc_.drawPlot(xB, xE, calc_text_);
         ui->widget->addGraph();
         ui->widget->graph(0)->setData(getXY.first,getXY.second);
         ui->widget->replot();
@@ -141,6 +141,6 @@ void MainWindow::on_pushButton_graphic_clicked()
 
 void MainWindow::on_pushButton_credit_clicked()
 {
-    credit.show();
+    credit_.show();
 }
 

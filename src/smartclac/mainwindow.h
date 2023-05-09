@@ -20,13 +20,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    Control calc{};
-    CreditWindow credit;
-    QString calc_text;
+    Control calc_{};
+    CreditWindow credit_;
+    QString calc_text_;
 
 private:
-    int check_dot;
-    int check_scope;
+    int check_dot_;
+    int check_scope_;
 
 
 private slots:

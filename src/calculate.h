@@ -21,9 +21,9 @@ class Checks {
   int inputCheck(string vlaue);
 
  private:
-  string digit_symbols = "0123456789.X";
-  string operator_symbols = "+-*/()^%";
-  string math_sympols = "!@#$_vbup";
+  string digit_symbols_ = "0123456789.X";
+  string operator_symbols_ = "+-*/()^%";
+  string math_sympols_ = "!@#$_vbup";
 };
 
 class Parser {
@@ -38,7 +38,7 @@ class Parser {
   string convertOperator(char op);
 
  private:
-  Checks check{};
+  Checks check_{};
 };
 
 class Calculate {
@@ -51,7 +51,7 @@ class Calculate {
   double sub(double x, double y) { return x - y; }
   double mul(double x, double y) { return x * y; }
   double div(double x, double y) { return x / y; }
-  int checkLine(string value) { return check.inputCheck(value); }
+  int checkLine(string value) { return check_.inputCheck(value); }
   double getItem();
 
   double calcOperator(double x, double y, char op);
@@ -63,9 +63,9 @@ class Calculate {
   double calcResult(string &lines);
 
  private:
-  Checks check{};
-  Parser pars{};
-  list<double> items{};
-  list<string> node{};
-  stack<char> opr{};
+  Checks check_{};
+  Parser pars_{};
+  list<double> items_{};
+  list<string> node_{};
+  stack<char> opr_{};
 };
