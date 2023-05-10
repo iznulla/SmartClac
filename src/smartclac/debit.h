@@ -2,9 +2,9 @@
 #define DEBIT_H
 
 #include <QDialog>
+#include <../deposit.h>
 
-constexpr double AVERAGE_DAYS_IN_MONTH = 30.416666666666667851;
-constexpr double NDFL = 13.00/100.00;
+
 
 namespace Ui {
 class Debit;
@@ -32,6 +32,7 @@ private slots:
 
 private:
     Ui::Debit *ui;
+    DepositCalcing deposit_calcing_{};
 };
 
 #endif // DEBIT_H

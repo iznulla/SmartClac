@@ -24,6 +24,7 @@ HEADERS += \
     ../calculate.h \
     ../controller.h \
     ../credit.h \
+    ../deposit.h \
     creditwindow.h \
     debit.h \
     mainwindow.h \
