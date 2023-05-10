@@ -34,3 +34,18 @@ std::pair<QString, QString> Control::ammountPercent(QString value,
   QString sum_percent = QString::number(ammo_percent.second, 'g', 7);
   return std::pair(sum_credit_and_percent, sum_percent);
 }
+
+void Control::depositCalc(double sum_v, double months_v, double rate_v, double tax_v, int choos_capyt, int choos_period) {
+    dep_calc_.initData(sum_v, months_v, rate_v, tax_v);
+    dep_calc_.debitCalcResult(choos_capyt, choos_period);
+}
+
+std::pair<QString, QString> Control::getDepositPercentsAndTaxSum() {
+    dep_calc_.percents = round(dep_calc_.percents);
+    dep_calc_.tax_sum = round(dep_calc_.tax_sum);
+    return std::pair(QString::number(dep_calc_.percents, 'g', 7), QString::number(dep_calc_.tax_sum, 'g', 7));
+}
+
+QString Control::getDepositTotal() {
+    return QString::number(dep_calc_.total, 'g', 7);
+}

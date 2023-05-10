@@ -1,7 +1,9 @@
-
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
 #include "calcplot.h"
 #include "credit.h"
+#include "deposit.h"
 
 class Control {
  public:
@@ -20,8 +22,19 @@ class Control {
   std::pair<QString, QString> ammountPercent(QString value,
                                              QVector<double> rate);
 
+  void depositCalc(double sum_v, double months_v, double rate_v,
+                   double tax_v, int choos_capyt, int choos_period);
+
+  std::pair<QString, QString> getDepositPercentsAndTaxSum();
+  QString getDepositTotal();
+
+
  private:
   Calculate calc_{};
   PlotCalc calcPlot_{};
   Credit cr_{};
+  DepositCalcing dep_calc_{};
+
 };
+
+#endif // CONTROLLER_H

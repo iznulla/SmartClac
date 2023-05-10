@@ -13,47 +13,44 @@ Debit::Debit(QWidget *parent) : QDialog(parent), ui(new Ui::Debit) {
   ui->lineEdit_add->setValidator(new QDoubleValidator(this));
   ui->lineEdit_del->setValidator(new QDoubleValidator(this));
   ui->lineEdit_add_all->setValidator(new QDoubleValidator(this));
-
   ui->lineEdit_sub_all->setValidator(new QDoubleValidator(this));
 }
 
 Debit::~Debit() { delete ui; }
 
 void Debit::on_pushButton_calculate_clicked() {
-  QString line, total_string;
 
-  double add_all = 0.0, sub_all = 0.0;
-  deposit_calcing_.sum = ui->lineEdit_sum_dep->text().toDouble();
-  deposit_calcing_.months = ui->lineEdit_period->text().toDouble();
-  deposit_calcing_.rate = ui->lineEdit_rate->text().toDouble();
-  deposit_calcing_.tax = ui->lineEdit_tax->text().toDouble();
+  double add_all{}, sub_all{};
+  double sum = ui->lineEdit_sum_dep->text().toDouble();
 
 
   while (ui->listWidget_add->count() != 0) {
     add_all += on_pushButton_del_clicked();
   }
-  deposit_calcing_.sum += add_all;
+  sum += add_all;
   while (ui->listWidget_sub->count() != 0) {
     sub_all += on_pushButton_del_2_clicked();
   }
-  deposit_calcing_.sum -= sub_all;
+  sum -= sub_all;
 
-  deposit_calcing_.debitInitCalc(ui->comboBox_capital->currentIndex());
+  double months = ui->lineEdit_period->text().toDouble();
+  double rate = ui->lineEdit_rate->text().toDouble();
+  double tax = ui->lineEdit_tax->text().toDouble() ;
+  int choosed_capytal = ui->comboBox_capital->currentIndex();
+  int choosed_period = ui->comboBox_peiod_of_pay->currentIndex();
 
+  controll_.depositCalc(sum, months, rate, tax, choosed_capytal, choosed_period);
+
+  QString total_string;
   total_string = QString::number(add_all);
   ui->lineEdit_add_all->setText(total_string);
   total_string = QString::number(sub_all);
   ui->lineEdit_sub_all->setText(total_string);
 
-
-  deposit_calcing_.total = round(deposit_calcing_.total);
-  deposit_calcing_.percents = round(deposit_calcing_.percents);
-  line = QString::number(deposit_calcing_.total, 'g', 20);
-  ui->lineEdit_total_sum_dep->setText(line);
-  line = QString::number(deposit_calcing_.percents, 'g', 20);
-  ui->lineEdit_percents->setText(line);
-  line = QString::number(deposit_calcing_.tax_sum);
-  ui->lineEdit_tax_sum->setText(line);
+  auto percent_tax_sum = controll_.getDepositPercentsAndTaxSum();
+  ui->lineEdit_total_sum_dep->setText(controll_.getDepositTotal());
+  ui->lineEdit_percents->setText(percent_tax_sum.first);
+  ui->lineEdit_tax_sum->setText(percent_tax_sum.second);
 }
 
 double Debit::on_pushButton_del_clicked() {

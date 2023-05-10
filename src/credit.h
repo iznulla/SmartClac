@@ -1,7 +1,9 @@
+#ifndef CREDIT_H
+#define CREDIT_H
+
 #include <math.h>
 
 #include <QString>
-// #include <iostream>
 #include <QVector>
 
 class Credit {
@@ -28,3 +30,5 @@ class Credit {
                                                       double rate_credit,
                                                       double term);
 };
+
+#endif // CREDIT_H

@@ -2,7 +2,7 @@
 #define DEBIT_H
 
 #include <QDialog>
-#include <../deposit.h>
+#include <../controller.h>
 
 
 
@@ -32,7 +32,7 @@ private slots:
 
 private:
     Ui::Debit *ui;
-    DepositCalcing deposit_calcing_{};
+    Control controll_{};
 };
 
 #endif // DEBIT_H

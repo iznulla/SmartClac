@@ -1,3 +1,6 @@
+#ifndef CALCPLOT_H
+#define CALCPLOT_H
+
 #include <QVector>
 #include "calculate.h"
 
@@ -17,3 +20,5 @@ public:
   
 
 };
+
+#endif // CALCPLOT_H

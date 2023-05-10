@@ -1,10 +1,16 @@
-#include <iostream>
+//#include "calculate.h"
+
+#ifndef DEPOSIT_H
+#define DEPOSIT_H
+
 #include <math.h>
+#include <iostream>
 
 constexpr double AVERAGE_DAYS_IN_MONTH = 30.416666666666667851;
 constexpr double NDFL = 13.00/100.00;
 
-struct DepositCalcing{
+struct DepositCalcing {
+
     double total{};
     double percents{};
     double tax_sum{};
@@ -12,6 +18,13 @@ struct DepositCalcing{
     double months{};
     double rate{};
     double tax{};
+
+    void initData (double sum_v, double months_v, double rate_v, double tax_v) {
+        sum = sum_v;
+        months = months_v;
+        rate = rate_v;
+        tax = tax_v * 1000000 / 100;
+    }
 
     double percent(int choos) {
         if (choos) {
@@ -32,15 +45,16 @@ struct DepositCalcing{
         }
        return std::pair(tax_sum_res, percents_res);
     }
-    void debitInitCalc(int choos){
-        tax = tax * 1000000 / 100;
-        auto tax_and_percent = taxSum(choos);
+    void debitCalcResult(int choos_capyt, int choos_period){
+        auto tax_and_percent = taxSum(choos_capyt);
         tax_sum = tax_and_percent.first;
         percents = tax_and_percent.second;
-        if (choos) {
+        if (choos_period) {
             total = sum;
         } else {
             total = sum + percents - tax_sum;
         }
     }
 };
+
+#endif // DEPOSIT_H

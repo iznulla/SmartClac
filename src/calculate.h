@@ -1,7 +1,10 @@
+#ifndef CALCULATE_H
+#define CALCULATE_H
+
 #include <math.h>
 
 #include <cstdlib>
-#include <iostream>
+//#include <iostream>
 #include <list>
 #include <stack>
 #include <string>
@@ -69,3 +72,5 @@ class Calculate {
   list<string> node_{};
   stack<char> opr_{};
 };
+
+#endif // CALCULATE_H
