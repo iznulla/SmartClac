@@ -1,7 +1,7 @@
 #include "parser.h"
 
 
-int Parser::priority(char op) {
+int s21::Parser::priority(char op) {
   int result = 0;
   if (op == '+' || op == '-')
     result = 1;
@@ -15,19 +15,19 @@ int Parser::priority(char op) {
     result = 0;
   return result;
 }
-std::string Parser::convertOperator(char op) {
+std::string s21::Parser::convertOperator(char op) {
     std::string temp{};
   temp.push_back(op);
   return temp;
 }
-void Parser::moveLessItems(std::stack<char> *opr, std::list<std::string> *node) {
+void s21::Parser::moveLessItems(std::stack<char> *opr, std::list<std::string> *node) {
   auto sz = opr->size();
   for (std::string::size_type i = 0; i != sz; ++i) {
     node->push_back(convertOperator(opr->top()));
     opr->pop();
   }
 }
-void Parser::addItem(char op, std::stack<char> *opr, std::list<std::string> *node) {
+void s21::Parser::addItem(char op, std::stack<char> *opr, std::list<std::string> *node) {
   if (!opr->empty()) {
     if (op == ')') {
       while (opr->top() != '(') {
@@ -55,7 +55,7 @@ void Parser::addItem(char op, std::stack<char> *opr, std::list<std::string> *nod
     opr->push(op);
   }
 }
-void Parser::parsToPolish(std::string value, std::stack<char> *opr,
+void s21::Parser::parsToPolish(std::string value, std::stack<char> *opr,
                           std::list<std::string> *node) {
   if (check_.inputCheck(value)) {
     for (size_t i = 0; i != value.size(); ++i) {

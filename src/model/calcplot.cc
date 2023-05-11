@@ -1,7 +1,7 @@
 #include "calcplot.h"
 
 
-std::pair<QVector<double>, QVector<double>> PlotCalc::calcing_plot(double xBegin, double xEnd, QString data) {
+std::pair<QVector<double>, QVector<double>> s21::PlotCalc::calcing_plot(double xBegin, double xEnd, QString data) {
       QVector<double> x, y;
       x.clear();
       y.clear();

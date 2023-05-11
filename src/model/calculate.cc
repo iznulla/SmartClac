@@ -9,12 +9,12 @@
 
 // class Calculate
 
-double Calculate::getItem() {
+double s21::Calculate::getItem() {
   double x = items_.back();
   items_.pop_back();
   return x;
 }
-double Calculate::calcOperator(double x, double y, char op) {
+double s21::Calculate::calcOperator(double x, double y, char op) {
     double result{};
   try {
   if (op == '+') {
@@ -43,7 +43,7 @@ double Calculate::calcOperator(double x, double y, char op) {
 
   return result;
 }
-double Calculate::calcFuncs(double x, char op) {
+double s21::Calculate::calcFuncs(double x, char op) {
     double result{};
   if (op == '!')
     result = cos(x);
@@ -65,13 +65,13 @@ double Calculate::calcFuncs(double x, char op) {
     result = log10(x);
   return result;
 }
-double Calculate::calcResult(std::string &lines) {
+double s21::Calculate::calcResult(std::string &lines) {
   if (lines.size() == 0) throw std::invalid_argument("ERROR");
   double res{};
   res = calculate(lines);
   return res;
 }
-double Calculate::calculate(std::string value) {
+double s21::Calculate::calculate(std::string value) {
   node_.clear();
   pars_.parsToPolish(value, &opr_, &node_);
   double result{};

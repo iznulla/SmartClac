@@ -5,19 +5,22 @@
 #include <stack>
 #include <list>
 
+namespace s21 {
+
 class Parser {
- public:
-  Parser() = default;
-  ~Parser() = default;
+public:
+    Parser() = default;
+    ~Parser() = default;
 
-  int priority(char op);
-  void moveLessItems(std::stack<char> *opr, std::list<std::string> *node);
-  void addItem(char op, std::stack<char> *opr, std::list<std::string> *node);
-  void parsToPolish(std::string value, std::stack<char> *opr, std::list<std::string> *node);
-  std::string convertOperator(char op);
+    int priority(char op);
+    void moveLessItems(std::stack<char> *opr, std::list<std::string> *node);
+    void addItem(char op, std::stack<char> *opr, std::list<std::string> *node);
+    void parsToPolish(std::string value, std::stack<char> *opr, std::list<std::string> *node);
+    std::string convertOperator(char op);
 
- private:
-  Checks check_{};
+private:
+    Checks check_{};
 };
+}  // namespace s21
 
 #endif // PARSER_H

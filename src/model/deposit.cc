@@ -1,14 +1,14 @@
 #include "deposit.h"
 
 
-void DepositCalcing::initData (double sum_v, double months_v, double rate_v, double tax_v) {
+void s21::DepositCalcing::initData (double sum_v, double months_v, double rate_v, double tax_v) {
         sum = sum_v;
         months = months_v;
         rate = rate_v;
         tax = tax_v;
     }
 
-    double DepositCalcing::percent(int choos) {
+    double s21::DepositCalcing::percent(int choos) {
 
         if (choos) {
             return (sum * pow((1 + (rate / 100) / 12), months)) - sum;
@@ -17,7 +17,7 @@ void DepositCalcing::initData (double sum_v, double months_v, double rate_v, dou
         }
     }
 
-    std::pair<double, double> DepositCalcing::taxSum(int choos) {
+    std::pair<double, double> s21::DepositCalcing::taxSum(int choos) {
         double percents_res = percent(choos);
         double part_for_tax = percents_res - tax;
         double tax_sum_res{};
@@ -28,7 +28,7 @@ void DepositCalcing::initData (double sum_v, double months_v, double rate_v, dou
         }
        return std::pair(tax_sum_res, percents_res);
     }
-    void DepositCalcing::debitCalcResult(int choos_capyt, int choos_period) {
+    void s21::DepositCalcing::debitCalcResult(int choos_capyt, int choos_period) {
 
         auto tax_and_percent = taxSum(choos_capyt);
         tax_sum = tax_and_percent.first;
