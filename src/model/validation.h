@@ -6,7 +6,7 @@
 namespace s21 {
 
 class Checks {
- public:
+public:
   Checks() = default;
   ~Checks() = default;
 
@@ -16,11 +16,11 @@ class Checks {
   int firstItem(char value);
   int inputCheck(std::string vlaue);
 
- private:
+private:
   std::string digit_symbols_ = "0123456789.X";
   std::string operator_symbols_ = "+-*/()^%";
   std::string math_sympols_ = "!@#$_vbup";
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // VALIDATION_H
+#endif // VALIDATION_H

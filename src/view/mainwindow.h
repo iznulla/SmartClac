@@ -15,22 +15,22 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
- public:
+public:
   MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
- private:
+private:
   Ui::MainWindow *ui;
   s21::Control calc_{};
   CreditWindow credit_;
   Debit debit_{};
   QString calc_text_;
 
- private:
+private:
   int check_dot_;
   int check_scope_;
 
- private slots:
+private slots:
   void inputItems();
   void inputOperators();
   void on_pushButton_AC_clicked();
@@ -43,4 +43,4 @@ class MainWindow : public QMainWindow {
   void on_pushButton_credit_clicked();
   void on_pushButton_debet_clicked();
 };
-#endif  // MAINWINDOW_H
+#endif // MAINWINDOW_H

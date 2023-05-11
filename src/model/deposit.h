@@ -26,6 +26,6 @@ struct DepositCalcing {
   std::pair<double, double> taxSum(int choos);
   void debitCalcResult(int choos_capyt, int choos_period);
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // DEPOSIT_H
+#endif // DEPOSIT_H

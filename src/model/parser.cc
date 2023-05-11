@@ -45,7 +45,8 @@ void s21::Parser::addItem(char op, std::stack<char> *opr,
         while (priority(op) <= priority(opr->top())) {
           node->push_back(convertOperator(opr->top()));
           opr->pop();
-          if (opr->empty()) break;
+          if (opr->empty())
+            break;
         }
         opr->push(op);
       }
@@ -75,5 +76,5 @@ void s21::Parser::parsToPolish(std::string value, std::stack<char> *opr,
     }
     moveLessItems(opr, node);
   } else
-    throw std::invalid_argument("ERROR");
+    throw;
 }

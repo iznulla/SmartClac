@@ -33,7 +33,7 @@ void Debit::on_pushButton_calculate_clicked() {
 
   double months = ui->lineEdit_period->text().toDouble();
   double rate = ui->lineEdit_rate->text().toDouble();
-  double tax = ui->lineEdit_tax->text().toDouble() * 1000000 / 100;
+  double tax = ui->lineEdit_tax->text().toDouble();
   int choosed_capytal = ui->comboBox_capital->currentIndex();
   int choosed_period = ui->comboBox_peiod_of_pay->currentIndex();
 

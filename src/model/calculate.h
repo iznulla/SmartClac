@@ -9,11 +9,11 @@
 namespace s21 {
 
 class Calculate {
- public:
+public:
   Calculate() = default;
   ~Calculate() = default;
 
- public:
+public:
   double plus(double x, double y) { return x + y; }
   double sub(double x, double y) { return x - y; }
   double mul(double x, double y) { return x * y; }
@@ -29,13 +29,13 @@ class Calculate {
   double calculate(std::string value);
   double calcResult(std::string &lines);
 
- private:
+private:
   s21::Checks check_{};
   s21::Parser pars_;
   std::list<double> items_{};
   std::list<std::string> node_{};
   std::stack<char> opr_{};
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // CALCULATE_H
+#endif // CALCULATE_H

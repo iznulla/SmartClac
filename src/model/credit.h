@@ -9,11 +9,11 @@
 namespace s21 {
 
 class Credit {
- public:
+public:
   Credit() = default;
   ~Credit() = default;
 
- public:
+public:
   double rate(double value) { return value / 100 / 12; }
   double termAndRate(double rate_credit, double term);
   double oneMonthAnnu(double ammo, double rate_credit, double term);
@@ -24,14 +24,12 @@ class Credit {
   std::pair<double, double> percentAndAmmount(QString line,
                                               QVector<double> rate_credit);
 
-  std::pair<QVector<double>, QVector<double>> annuCalc(double ammo,
-                                                       double rate_credit,
-                                                       double term);
+  std::pair<QVector<double>, QVector<double>>
+  annuCalc(double ammo, double rate_credit, double term);
 
-  std::pair<QVector<double>, QVector<double>> difCalc(double ammo,
-                                                      double rate_credit,
-                                                      double term);
+  std::pair<QVector<double>, QVector<double>>
+  difCalc(double ammo, double rate_credit, double term);
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // CREDIT_H
+#endif // CREDIT_H

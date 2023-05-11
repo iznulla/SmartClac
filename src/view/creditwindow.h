@@ -12,16 +12,16 @@ class CreditWindow;
 class CreditWindow : public QDialog {
   Q_OBJECT
 
- public:
+public:
   explicit CreditWindow(QWidget *parent = nullptr);
   ~CreditWindow();
 
- private slots:
+private slots:
   void on_pushButton_cr_calc_clicked();
 
- private:
+private:
   Ui::CreditWindow *ui;
   s21::Control controll_{};
 };
 
-#endif  // CREDITWINDOW_H
+#endif // CREDITWINDOW_H

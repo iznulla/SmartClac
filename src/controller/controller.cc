@@ -6,13 +6,13 @@ void s21::Control::calcs(QString &lines) {
   lines = QString::number(result, 'g', 8);
 }
 
-std::pair<QVector<double>, QVector<double>> s21::Control::drawPlot(
-    double xBegin, double xEnd, QString data) {
+std::pair<QVector<double>, QVector<double>>
+s21::Control::drawPlot(double xBegin, double xEnd, QString data) {
   return std::pair(calcPlot_.calcing_plot(xBegin, xEnd, data));
 }
 
-std::pair<QVector<double>, QVector<double>> s21::Control::CreditCalc(
-    double ammo, double rate, double term, int is_ann) {
+std::pair<QVector<double>, QVector<double>>
+s21::Control::CreditCalc(double ammo, double rate, double term, int is_ann) {
   if ((term > 0) && rate) {
     if (!is_ann)
       return std::pair(cr_.annuCalc(ammo, rate, term));

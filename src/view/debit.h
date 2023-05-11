@@ -12,11 +12,11 @@ class Debit;
 class Debit : public QDialog {
   Q_OBJECT
 
- public:
+public:
   explicit Debit(QWidget *parent = nullptr);
   ~Debit();
 
- private slots:
+private slots:
   void on_pushButton_calculate_clicked();
 
   double on_pushButton_del_clicked();
@@ -27,9 +27,9 @@ class Debit : public QDialog {
 
   void on_pushButton_add_2_clicked();
 
- private:
+private:
   Ui::Debit *ui;
   s21::Control controll_{};
 };
 
-#endif  // DEBIT_H
+#endif // DEBIT_H

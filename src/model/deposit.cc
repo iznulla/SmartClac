@@ -5,7 +5,7 @@ void s21::DepositCalcing::initData(double sum_v, double months_v, double rate_v,
   sum = sum_v;
   months = months_v;
   rate = rate_v;
-  tax = tax_v;
+  tax = tax_v * 1000000 / 100;
 }
 
 double s21::DepositCalcing::percent(int choos) {

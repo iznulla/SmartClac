@@ -9,7 +9,7 @@
 namespace s21 {
 
 class Parser {
- public:
+public:
   Parser() = default;
   ~Parser() = default;
 
@@ -20,9 +20,9 @@ class Parser {
                     std::list<std::string> *node);
   std::string convertOperator(char op);
 
- private:
+private:
   s21::Checks checks_{};
 };
-}  // namespace s21
+} // namespace s21
 
-#endif  // PARSER_H
+#endif // PARSER_H
