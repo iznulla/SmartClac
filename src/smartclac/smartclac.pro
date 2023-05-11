@@ -13,6 +13,7 @@ SOURCES += \
     ../calculate.cpp \
     ../controller.cpp \
     ../credit.cpp \
+    ../deposit.cpp \
     creditwindow.cpp \
     debit.cpp \
     main.cpp \
