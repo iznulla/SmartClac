@@ -1,50 +1,40 @@
 #include "calculate.h"
 
-// class Check
-
-
-// class Parser
-
-
-
-// class Calculate
-
 double s21::Calculate::getItem() {
   double x = items_.back();
   items_.pop_back();
   return x;
 }
 double s21::Calculate::calcOperator(double x, double y, char op) {
-    double result{};
+  double result{};
   try {
-  if (op == '+') {
-    result = plus(x, y);
-  } else if (op == '-') {
-    result = sub(x, y);
-  } else if (op == '*') { 
-    result = mul(x, y);
-  } else if (op == '/') {
-    if (y == 0)
-      throw std::invalid_argument("division by zero");
-    else
-      result = div(x, y);
-  } else if (op == '%') {
-    if (y == 0)
-      throw std::invalid_argument("division by zero");
-    else
-      result = fmod(x, y);
-  } else if (op == '^') {
-    result = pow(x, y);
-  }
-  }
-  catch (...) {
-      throw std::invalid_argument("INVALID INPUT");
+    if (op == '+') {
+      result = plus(x, y);
+    } else if (op == '-') {
+      result = sub(x, y);
+    } else if (op == '*') {
+      result = mul(x, y);
+    } else if (op == '/') {
+      if (y == 0)
+        throw std::invalid_argument("division by zero");
+      else
+        result = div(x, y);
+    } else if (op == '%') {
+      if (y == 0)
+        throw std::invalid_argument("division by zero");
+      else
+        result = fmod(x, y);
+    } else if (op == '^') {
+      result = pow(x, y);
+    }
+  } catch (...) {
+    throw std::invalid_argument("INVALID INPUT");
   }
 
   return result;
 }
 double s21::Calculate::calcFuncs(double x, char op) {
-    double result{};
+  double result{};
   if (op == '!')
     result = cos(x);
   else if (op == '@')

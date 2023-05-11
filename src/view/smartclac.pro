@@ -9,11 +9,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ../calcplot.cpp \
-    ../calculate.cpp \
-    ../controller.cpp \
-    ../credit.cpp \
-    ../deposit.cpp \
+    ../controller/controller.cc \
+    ../model/calcplot.cc \
+    ../model/calculate.cc \
+    ../model/credit.cc \
+    ../model/deposit.cc \
+    ../model/parser.cc \
+    ../model/validation.cc \
     creditwindow.cpp \
     debit.cpp \
     main.cpp \
@@ -21,11 +23,13 @@ SOURCES += \
     qcustomplot.cpp
 
 HEADERS += \
-    ../calcplot.h \
-    ../calculate.h \
-    ../controller.h \
-    ../credit.h \
-    ../deposit.h \
+    ../controller/controller.h \
+    ../model/calcplot.h \
+    ../model/calculate.h \
+    ../model/credit.h \
+    ../model/deposit.h \
+    ../model/parser.h \
+    ../model/validation.h \
     creditwindow.h \
     debit.h \
     mainwindow.h \

@@ -21,9 +21,8 @@ std::pair<double, double> s21::Credit::percentAndAmmount(
   return std::pair(sum_percent, sum_amm_percent);
 }
 
-std::pair<QVector<double>, QVector<double>> s21::Credit::annuCalc(double ammo,
-                                                             double rate_credit,
-                                                             double term) {
+std::pair<QVector<double>, QVector<double>> s21::Credit::annuCalc(
+    double ammo, double rate_credit, double term) {
   QVector<double> debt_p{}, balance_o{};
   double amm = oneMonthAnnu(ammo, rate_credit, term);
   double balance_owed = ammo;
@@ -37,9 +36,8 @@ std::pair<QVector<double>, QVector<double>> s21::Credit::annuCalc(double ammo,
   return std::pair(debt_p, balance_o);
 }
 
-std::pair<QVector<double>, QVector<double>> s21::Credit::difCalc(double ammo,
-                                                            double rate_credit,
-                                                            double term) {
+std::pair<QVector<double>, QVector<double>> s21::Credit::difCalc(
+    double ammo, double rate_credit, double term) {
   QVector<double> debt_p{}, balance_o{};
   double amm = oneMonthDif(ammo, term);
   double balance_owed = ammo;

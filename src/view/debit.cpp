@@ -19,10 +19,8 @@ Debit::Debit(QWidget *parent) : QDialog(parent), ui(new Ui::Debit) {
 Debit::~Debit() { delete ui; }
 
 void Debit::on_pushButton_calculate_clicked() {
-
   double add_all{}, sub_all{};
   double sum = ui->lineEdit_sum_dep->text().toDouble();
-
 
   while (ui->listWidget_add->count() != 0) {
     add_all += on_pushButton_del_clicked();
@@ -39,7 +37,8 @@ void Debit::on_pushButton_calculate_clicked() {
   int choosed_capytal = ui->comboBox_capital->currentIndex();
   int choosed_period = ui->comboBox_peiod_of_pay->currentIndex();
 
-  controll_.depositCalc(sum, months, rate, tax, choosed_capytal, choosed_period);
+  controll_.depositCalc(sum, months, rate, tax, choosed_capytal,
+                        choosed_period);
 
   QString total_string;
   total_string = QString::number(add_all);

@@ -1,6 +1,5 @@
 #include "parser.h"
 
-
 int s21::Parser::priority(char op) {
   int result = 0;
   if (op == '+' || op == '-')
@@ -9,25 +8,27 @@ int s21::Parser::priority(char op) {
     result = 2;
   else if (op == '^')
     result = 3;
-  else if (check_.funcsCheck(op))
+  else if (checks_.funcsCheck(op))
     result = 4;
   else if (op == '(')
     result = 0;
   return result;
 }
 std::string s21::Parser::convertOperator(char op) {
-    std::string temp{};
+  std::string temp{};
   temp.push_back(op);
   return temp;
 }
-void s21::Parser::moveLessItems(std::stack<char> *opr, std::list<std::string> *node) {
+void s21::Parser::moveLessItems(std::stack<char> *opr,
+                                std::list<std::string> *node) {
   auto sz = opr->size();
   for (std::string::size_type i = 0; i != sz; ++i) {
     node->push_back(convertOperator(opr->top()));
     opr->pop();
   }
 }
-void s21::Parser::addItem(char op, std::stack<char> *opr, std::list<std::string> *node) {
+void s21::Parser::addItem(char op, std::stack<char> *opr,
+                          std::list<std::string> *node) {
   if (!opr->empty()) {
     if (op == ')') {
       while (opr->top() != '(') {
@@ -56,10 +57,10 @@ void s21::Parser::addItem(char op, std::stack<char> *opr, std::list<std::string>
   }
 }
 void s21::Parser::parsToPolish(std::string value, std::stack<char> *opr,
-                          std::list<std::string> *node) {
-  if (check_.inputCheck(value)) {
+                               std::list<std::string> *node) {
+  if (checks_.inputCheck(value)) {
     for (size_t i = 0; i != value.size(); ++i) {
-      if (check_.numberCheck(value[i])) {
+      if (checks_.numberCheck(value[i])) {
         std::size_t t = i;
         double d = stod(value.substr(t), &t);
         i += t - 1;

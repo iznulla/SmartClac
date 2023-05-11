@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 
-#include <iostream>
+// #include <iosetream>
 
-#include "calculate.h"
+#include "../calculate.h"
 
 class TestCalculate : public ::testing::Test {
  public:
-  Checks check;
-  Calculate calc;
+  s21::Checks check;
+  s21::Calculate calc;
 };
 
 TEST_F(TestCalculate, inputValidationTest) {
@@ -50,8 +50,8 @@ TEST_F(TestCalculate, Calculating) {
   EXPECT_EQ(calc.calculate("5*(-3)"), -15);
   EXPECT_NEAR(calc.calculate("5/3"), 1.6666667, 0.0000001);
 
-  //   // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
-  //   //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
+  // {"COS", !},  {"SIN", @},  {"TAN", #}, {"ACOS", $}, {"ASIN", _},
+  //     {"ATAN", v}, {"SQRT", b}, {"LN", u},  {"LOG", p},  {"MOD", %}};
   EXPECT_NEAR(calc.calculate("2*(3+1)*2"), 16, 0.0000001);
   EXPECT_NEAR(calc.calculate("2*(((3+1)-1))*2"), 12, 0.0000001);
   EXPECT_NEAR(calc.calculate("(3+5)*2+3/(1-4)"), 15, 0.0000001);
