@@ -16,19 +16,19 @@ double s21::Calculate::calcOperator(double x, double y, char op) {
       result = mul(x, y);
     } else if (op == '/') {
       if (y == 0)
-        throw;
+        throw("ERROR");
       else
         result = div(x, y);
     } else if (op == '%') {
       if (y == 0)
-        throw;
+        throw("ERROR");
       else
         result = fmod(x, y);
     } else if (op == '^') {
       result = pow(x, y);
     }
   } catch (...) {
-    throw;
+    throw("ERROR");
   }
 
   return result;
@@ -57,7 +57,7 @@ double s21::Calculate::calcFuncs(double x, char op) {
 }
 double s21::Calculate::calcResult(std::string &lines) {
   if (lines.size() == 0)
-    throw;
+    throw("ERROR");
   double res{};
   res = calculate(lines);
   return res;

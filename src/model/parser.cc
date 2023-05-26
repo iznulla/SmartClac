@@ -76,5 +76,5 @@ void s21::Parser::parsToPolish(std::string value, std::stack<char> *opr,
     }
     moveLessItems(opr, node);
   } else
-    throw;
+    throw("ERROR");
 }
